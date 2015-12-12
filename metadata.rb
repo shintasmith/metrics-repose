@@ -1,0 +1,11 @@
+name 'metrics-repose'
+maintainer 'Rackspace'
+maintainer_email 'sfo-devops@lists.rackspace.com'
+license 'Apache 2.0'
+description 'Installs/Configures metrics-repose'
+long_description 'Installs/Configures metrics-repose'
+version '0.1.0)'
+
+depends 'apt'
+depends 'java'
+depends 'repose'

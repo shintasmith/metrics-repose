@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<valkyrie-authorization xmlns="http://docs.openrepose.org/repose/valkyrie-authorization/v1.0" cache-timeout-millis="<%= @cache_timeout_millis %>" enable-masking-403s="<%= @enable_masking_403s %>" enable-bypass-account-admin="<%= @enable_bypass_account_admin %>">
+    <valkyrie-server uri="<%= @valkyrie_server_uri %>" username="<%= @valkyrie_server_username %>" password="<%= @valkyrie_server_password %>"/>
+    <translate-permissions-to-roles/> 
+    <collection-resources device-id-mismatch-action="<%= @device_id_mismatch_action %>">
+        <resource>
+            <path-regex http-methods="GET">.*/hybrid:\d+/entities/?</path-regex>
+            <collection>
+                <json>
+                    <path-to-collection>$.values</path-to-collection>
+                    <path-to-device-id>
+                        <path>$.uri</path>
+                        <regex>^https?://core.rackspace.com/accounts/\d*/devices/(\d*)$</regex>
+                    </path-to-device-id>
+                    <path-to-item-count>$.metadata.count</path-to-item-count>
+                </json>
+            </collection>
+        </resource>
+        <resource>
+            <path-regex http-methods="GET">.*/hybrid:\d+/views/overview/?</path-regex>
+            <collection>
+                <json>
+                    <path-to-collection>$.values</path-to-collection>
+                    <path-to-device-id>
+                        <path>$.entity.uri</path>
+                        <regex>^https?://core.rackspace.com/accounts/\d*/devices/(\d*)$</regex>
+                    </path-to-device-id>
+                    <path-to-item-count>$.metadata.count</path-to-item-count>
+                </json>
+            </collection>
+        </resource>
+        <resource>
+            <path-regex http-methods="GET">.*/hybrid:\d+/views/latest_alarm_states/?</path-regex>
+            <collection>
+                <json>
+                    <path-to-collection>$.values</path-to-collection>
+                    <path-to-device-id>
+                        <path>$.entity_uri</path>
+                        <regex>^https?://core.rackspace.com/accounts/\d*/devices/(\d*)$</regex>
+                    </path-to-device-id>
+                    <path-to-item-count>$.metadata.count</path-to-item-count>
+                </json>
+            </collection>
+        </resource>
+        <resource>
+            <path-regex http-methods="GET">.*/hybrid:\d+/views/metric_list/?</path-regex>
+            <collection>
+                <json>
+                    <path-to-collection>$.values</path-to-collection>
+                    <path-to-device-id>
+                        <path>$.uri</path>
+                        <regex>^https?://core.rackspace.com/accounts/\d*/devices/(\d*)$</regex>
+                    </path-to-device-id>
+                    <path-to-item-count>$.metadata.count</path-to-item-count>
+                </json>
+            </collection>
+        </resource>
+    </collection-resources>
+    <pre-authorized-roles>
+        <role>unregistered_product</role>
+        <role>hybridRole</role>
+    </pre-authorized-roles>
+</valkyrie-authorization>
