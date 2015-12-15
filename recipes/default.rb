@@ -109,17 +109,17 @@ end
 filter_cluster_map = {
   'header-normalization'   => node['repose']['header_normalization']['cluster_id'],
   'keystone-v2'            => node['repose']['keystone_v2']['cluster_id'],
-  'ip-identity'            => node['repose']['ip-identity']['cluster_id'],
-  'rate-limiting'          => node['repose']['rate-limiting']['cluster_id'],
-  'api-validator'          => node['repose']['api-validator']['cluster_id']
+  'ip-identity'            => node['repose']['ip_identity']['cluster_id'],
+  'rate-limiting'          => node['repose']['rate_limiting']['cluster_id'],
+  'api-validator'          => node['repose']['api_validator']['cluster_id']
 }
 
 filter_uri_regex_map = {
   'header-normalization'   => node['repose']['header_normalization']['uri_regex'],
   'keystone-v2'            => node['repose']['keystone_v2']['uri_regex'],
-  'ip-identity'            => node['repose']['ip-identity']['uri_regex'],
-  'rate-limiting'          => node['repose']['rate-limiting']['uri_regex'],
-  'api-validator'          => node['repose']['api-validator']['uri_regex']
+  'ip-identity'            => node['repose']['ip_identity']['uri_regex'],
+  'rate-limiting'          => node['repose']['rate_limiting']['uri_regex'],
+  'api-validator'          => node['repose']['api_validator']['uri_regex']
 }
 
 service_cluster_map = {
