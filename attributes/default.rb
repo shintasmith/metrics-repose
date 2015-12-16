@@ -76,35 +76,37 @@ default['repose']['keystone_v2']['uri_regex'] = nil
 default['repose']['keystone_v2']['identity_username'] = 'identity_username'
 default['repose']['keystone_v2']['identity_password'] = 'identity_p4ssw0rd'
 
-default['repose']['keystone_v2']['identity_uri'] = 'http://localhost:8900/identity'
+default['repose']['keystone_v2']['identity_uri'] = 'https://identity.api.rackspacecloud.com/v2.0'
 default['repose']['keystone_v2']['identity_set_roles'] = true
 default['repose']['keystone_v2']['identity_set_groups'] = false
 default['repose']['keystone_v2']['identity_set_catalog'] = false
-default['repose']['keystone_v2']['whitelist_uri_regexes'] = nil
+default['repose']['keystone_v2']['whitelist_uri_regexes'] = %w(
+  ^/v1\.0/?
+)
 default['repose']['keystone_v2']['tenant_uri_extraction_regex'] = '.*/v1.0/(\d+|[a-zA-Z]+:\d+)/.+'
-default['repose']['keystone_v2']['preauthorized_service_admin_role'] = nil
+default['repose']['keystone_v2']['preauthorized_service_admin_role'] = ['hybridRole']
 default['repose']['keystone_v2']['token_timeout_variability'] = 15
 default['repose']['keystone_v2']['token_timeout'] = 600
 
 default['repose']['ip_identity']['cluster_id'] = ['all']
-default['repose']['ip_identity']['quality'] = 0.2
+default['repose']['ip_identity']['quality'] = 0.1
 default['repose']['ip_identity']['white_list_quality'] = 1.0
 default['repose']['ip_identity']['white_list_ip_addresses'] = ['127.0.0.1']
 
 default['repose']['rate_limiting']['cluster_id'] = ['all']
-default['repose']['rate_limiting']['uri_regex'] = '/limits'
-default['repose']['rate_limiting']['include_absolute_limits'] = false
+default['repose']['rate_limiting']['uri_regex'] = '/v[0-9.]+/(hybrid:)?[0-9]+/limits/?'
+default['repose']['rate_limiting']['include_absolute_limits'] = true
 default['repose']['rate_limiting']['limit_groups'] = [
-  { 'id' => 'limited',
-    'groups' => 'limited',
+  { 'id' => 'main',
+    'groups' => 'IP_Standard',
     'default' => true,
     'limits' => [
-      { 'id' => 'all',
-        'uri' => '*',
-        'uri-regex' => '/.*',
-        'http-methods' => 'POST PUT GET DELETE',
+      { 'id' => '/version/tenantId/*',
+        'uri' => '/version/tenantId/*',
+        'uri-regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
+        'http-methods' => 'ALL',
         'unit' => 'MINUTE',
-        'value' => 10
+        'value' => 10000
       }
     ]
   },

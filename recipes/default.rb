@@ -56,54 +56,35 @@ node['repose']['services'].each do |service|
   include_recipe "repose::service-#{service}"
 end
 
-if %w(stage prod).any? { |e| e.include?(node.chef_environment) }
-  # load non-default secrets
-  metrics_credentials = Chef::EncryptedDataBagItem.load('passwords', 'metrics')
-  repose_credentials = Chef::EncryptedDataBagItem.load('credentials', 'repose')
+metrics_credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node.env}")
 
-  # extract regional identity credentials
-  metrics_us_auth_api_databag_item = "us_auth_api_password_#{node.chef_environment}"
-  metrics_uk_auth_api_databag_item = "uk_auth_api_password_#{node.chef_environment}"
+identity_url = URI.join(identity_url, '/').to_s # strip trailing path (repose adds it)
 
-  if node['metrics']['datacenter'] == 'lon3'
-    identity_url = node['metrics']['uk_identity_service_url_2']
-    identity_username = node['metrics']['uk_auth_service_username']
-    identity_password = metrics_credentials[metrics_uk_auth_api_databag_item]
-  else
-    identity_url = node['metrics']['us_identity_service_url_2']
-    identity_username = node['metrics']['us_auth_service_username']
-    identity_password = metrics_credentials[metrics_us_auth_api_databag_item]
-  end
+node.set['repose']['keystone_v2']['identity_uri'] = identity_url
+node.set['repose']['keystone_v2']['identity_username'] = dbag['username']
+node.set['repose']['keystone_v2']['identity_password'] = dbag['password']
 
-  identity_url = URI.join(identity_url, '/').to_s # strip trailing path (repose adds it)
+# set non-default (environment-specific) configuration
 
-  node.set['repose']['keystone_v2']['identity_uri'] = identity_url
-  node.set['repose']['keystone_v2']['identity_username'] = identity_username
-  node.set['repose']['keystone_v2']['identity_password'] = identity_password
+# TODO: these next two attr updates would break a default len > 1 list of peers (should iterate and update ports?)
+# update for stage/prod port
+node.set['repose']['peers'] = [{
+  cluster_id: 'repose',
+  id: 'repose_node',
+  hostname: node['network']['ipaddress_eth0'],
+  port: '8080'
+}]
 
-  # set non-default (environment-specific) configuration
-
-  # TODO: these next two attr updates would break a default len > 1 list of peers (should iterate and update ports?)
-  # update for stage/prod port
-  node.set['repose']['peers'] = [{
-    cluster_id: 'repose',
-    id: 'repose_node',
-    hostname: node['network']['ipaddress_eth0'],
-    port: '8080'
-  }]
-
-  # update for stage/prod port
-  node.set['repose']['endpoints'] = [{
-    cluster_id: 'repose',
-    id: 'public_api',
-    protocol: 'http',
-    hostname: node['network']['ipaddress_eth0'],
-    port: '7000',
-    root_path: '/',
-    default: true
-  }]
-
-end
+# update for stage/prod port
+node.set['repose']['endpoints'] = [{
+  cluster_id: 'repose',
+  id: 'public_api',
+  protocol: 'http',
+  hostname: node['network']['ipaddress_eth0'],
+  port: '7000',
+  root_path: '/',
+  default: true
+}]
 
 # NOTE these hash keys should be left as strings or system-model.cfg.xml.erb will break
 filter_cluster_map = {
