@@ -62,9 +62,9 @@ default['repose']['header_normalization']['blacklist'] = [{
 }]
 
 default['repose']['version'] = '7.3.0.0'
-default[:repose][:jvm_minimum_heap_size] = '2g'
-default[:repose][:jvm_maximum_heap_size] = '4g'
-default[:repose][:jvm_maximum_file_descriptors] = '65535'
+default['repose']['jvm_minimum_heap_size'] = '2g'
+default['repose']['jvm_maximum_heap_size'] = '4g'
+default['repose']['jvm_maximum_file_descriptors'] = '65535'
 
 default['repose']['owner'] = 'repose'
 default['repose']['group'] = 'repose'

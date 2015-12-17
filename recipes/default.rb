@@ -16,9 +16,9 @@ file '/etc/init.d/repose-valve' do
 end
 
 if node.chef_environment == 'dev'
-  node.set[:repose][:jvm_minimum_heap_size] = '1g'
-  node.set[:repose][:jvm_maximum_heap_size] = '1g'
-  node.set[:repose][:jvm_maximum_file_descriptors] = '16384'
+  node.set['repose']['jvm_minimum_heap_size'] = '1g'
+  node.set['repose']['jvm_maximum_heap_size'] = '1g'
+  node.set['repose']['jvm_maximum_file_descriptors'] = '16384'
 end
 
 # NOTE repose::default is mostly copied here due to the following code (which makes wrapping nigh impossible):
@@ -61,8 +61,8 @@ metrics_credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{nod
 identity_url = URI.join(identity_url, '/').to_s # strip trailing path (repose adds it)
 
 node.set['repose']['keystone_v2']['identity_uri'] = identity_url
-node.set['repose']['keystone_v2']['identity_username'] = dbag['username']
-node.set['repose']['keystone_v2']['identity_password'] = dbag['password']
+node.set['repose']['keystone_v2']['identity_username'] = metrics_credentials['username']
+node.set['repose']['keystone_v2']['identity_password'] = metrics_credentials['password']
 
 # set non-default (environment-specific) configuration
 
