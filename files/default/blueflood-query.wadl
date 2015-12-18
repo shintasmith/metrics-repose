@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://wadl.dev.java.net/2009/02" xmlns:rax="http://docs.rackspace.com/api"
+    xmlns:wadl="http://wadl.dev.java.net/2009/02" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <resources base="https://global.metrics.api.rackspacecloud.com/">
+      <!-- Default identity roles of admin and observer are added because we believe that monitoring sub-users have just got those roles
+           and until we get this sorted out with Identity, they should be given access to our query endpoint -->
+        <resource path="v1.0" id="v1version" rax:roles="monitoring:admin identity:user-admin admin">
+            <method name="GET">
+            </method>
+            <resource path="{tenantId}" rax:roles="monitoring:observer cloudmetrics:observer observer monitoring:creator" id="v1tenantid">
+                <param name="X-Auth-Token" style="header" type="xsd:string" required="true">
+                    <doc>A valid authentication token</doc>
+                </param>
+                <param name="tenantId" type="xsd:string" required="true" style="template">
+                    <doc>A subscriber to the cloudmetrics service</doc>
+                </param>
+                <resource path="limits" id="v1limits">
+                    <method name="GET">
+                    </method>
+                </resource>
+                <resource path="experimental" id="experimental">
+                    <resource path="views" id="experimental_views">
+                        <resource path="metric_data" id="experimental_metric_datas">
+                            <method name="POST">
+                            </method>
+                            <resource path="{metric_name}" id="experimental_metric_data">
+                                <param name="metric_name" type="xsd:string" required="true" style="template">
+                                    <doc>metric name</doc>
+                                </param>
+                                <method name="GET">
+                                </method>
+                            </resource>
+                        </resource>
+                        <resource path="histograms" id="experimental_histograms">
+                            <resource path="{metric_name}" id="experimental_histogram">
+                                <param name="metric_name" type="xsd:string" required="true" style="template">
+                                    <doc>metric name</doc>
+                                </param>
+                                <method name="GET">
+                                </method>
+                            </resource>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resource>
+        <resource path="v2.0" id="version" rax:roles="monitoring:admin identity:user-admin admin">
+            <method name="GET" rax:roles="cloudmetrics:observer">
+            </method>
+            <resource path="{tenantId}" rax:roles="cloudmetrics:observer monitoring:observer observer monitoring:creator" id="tenantid">
+                <param name="X-Auth-Token" style="header" type="xsd:string" required="true">
+                    <doc>A valid authentication token</doc>
+                </param>
+                <param name="tenantId" type="xsd:string" required="true" style="template">
+                    <doc>A subscriber to the cloudmetrics service</doc>
+                </param>
+                <resource path="limits" id="limits">
+                    <method name="GET" rax:roles="cloudmetrics:observer"> </method>
+                </resource>
+                <resource path="views" id="metrics_view">
+                    <method name="POST">
+                    </method>
+                    <resource path="{metric_name}" id="metric_name">
+                        <param name="metric_name" type="xsd:string" required="true" style="template">
+                            <doc>metric name</doc>
+                        </param>
+                        <param name="points" style="query" type="xsd:int" required="false">
+                            <wadl:doc xmlns="http//docbook.org/ns/docbook">
+                                Specifies the number of points to display in the results.
+                                One of points or resolution parameter must be specified.
+                            </wadl:doc>
+                        </param>
+                        <param name="resolution" style="query" type="xsd:string" required="false">
+                            <wadl:doc xmlns="http//docbook.org/ns/docbook">
+                                Specifies the granularity of data to query. 
+                                One of points or resolution parameter must be specified.
+                            </wadl:doc>
+                            <option value="FULL"/>
+                            <option value="MIN5"/>
+                            <option value="MIN20"/>
+                            <option value="MIN60"/>
+                            <option value="MIN240"/>
+                            <option value="MIN1440"/>
+                        </param>
+                        <param name="from" style="query" type="xsd:long" required="false">
+                            <wadl:doc xmlns="http//docbook.org/ns/docbook">
+                                Specifies the timestamp that marks the beginning of the time range.
+                            </wadl:doc>
+                        </param>
+                        <param name="to" style="query" type="xsd:long" required="false">
+                            <wadl:doc xmlns="http//docbook.org/ns/docbook">
+                                Specifies the timestamp that marks the end of the time range.
+                            </wadl:doc>
+                        </param>
+                        <param name="select" style="query" type="xsd:string" required="false">
+                            <wadl:doc xmlns="http//docbook.org/ns/docbook">
+                                Specifies the type of statistics to return. 
+                            </wadl:doc>
+                            <option value="average"/>
+                            <option value="variance"/>
+                            <option value="min"/>
+                            <option value="max"/>
+                        </param>
+                        <method name="GET">
+                        </method>
+                    </resource>
+                    <resource path="histograms" id="histogram_metrics">
+                        <resource path="{metric_name}" id="histogram_metric_name">
+                            <param name="metric_name" type="xsd:string" required="true" style="template">
+                                <doc>metric name</doc>
+                            </param>
+                            <method name="GET">
+                            </method>
+                        </resource>
+                    </resource>
+                </resource>
+                <resource path="metrics">
+                    <resource path="search">
+                        <method name="GET">
+                        </method>
+                    </resource>
+                </resource>
+                <resource path="events">
+                    <resource path="getEvents">
+                        <method name="GET">
+                        </method>
+                        <method name="OPTIONS">
+                        </method>
+                    </resource>
+                </resource>
+            </resource>
+        </resource>
+    </resources>
+</application>

@@ -12,7 +12,7 @@ To use this cookbook you'll need to add it via [berkshelf](http://berkshelf.com/
 
 Other platforms are untested.
 
-- Ubuntu 14 (Trusty Tahr)
+- Ubuntu 14.04
 
 ## Attributes
 

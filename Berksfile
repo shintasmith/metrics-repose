@@ -2,7 +2,6 @@ source 'https://supermarket.chef.io'
 
 metadata
 
-cookbook 'apt'
+cookbook 'apt', '~> 3.0.0'
 cookbook 'java'
-cookbook 'repose', git: 'https://github.com/rackerlabs/cookbook-repose.git'
-cookbook 'minitest-handler'
+cookbook 'repose', git: 'https://github.com/rackerlabs/cookbook-repose.git', tag: '3.3.3'
