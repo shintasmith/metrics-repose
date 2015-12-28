@@ -4,4 +4,4 @@ cache: bundler
 sudo: false
 rvm:
   - 2.0.0
-script: bundle exec rake travis:ci
+script: bundle exec rake style
