@@ -1,7 +1,7 @@
 require 'chefspec'
 require_relative 'spec_helper'
 
-describe 'ele-repose::filter-valkyrie-authorization' do
+describe 'metrics-repose::filter-valkyrie-authorization' do
   before { stub_resources }
 
   let(:chef_run) { ChefSpec::SoloRunner.new.converge(described_recipe) }
