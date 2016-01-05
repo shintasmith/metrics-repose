@@ -58,6 +58,7 @@ end
 
 metrics_credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node.env}")
 
+identity_url = node['repose']['keystone_v2']['identity_uri'] || ''
 identity_url = URI.join(identity_url, '/').to_s # strip trailing path (repose adds it)
 
 node.set['repose']['keystone_v2']['identity_uri'] = identity_url

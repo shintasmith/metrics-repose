@@ -7,7 +7,7 @@ describe 'metrics-repose::default' do
   let(:chef_run) { ChefSpec::SoloRunner.new.converge(described_recipe) }
 
   it 'includes the `repose` recipe' do
-    expect(chef_run).to include_recipe('repose::default')
+    expect(chef_run).to include_recipe('repose::install')
   end
 
   it 'includes the `java` recipe' do
