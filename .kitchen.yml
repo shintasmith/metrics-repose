@@ -1,45 +1,45 @@
 ---
-driver:
+driver: 
   name: vagrant
-  customize:
-    memory: 2560
 
 provisioner:
-  name: chef_solo
-  require_chef_omnibus: 11.8.2 # to match my chef environment version, alter as-needed
-  chef_omnibus_install_options: -d /tmp/vagrant-cache/vagrant_omnibus
+  name: chef_zero
 
 platforms:
   - name: ubuntu-14.04
 
 suites:
-- name: default
+- name: query
   run_list: [
-    "apt",
-    "java",
+    "recipe[metrics-repose::default]",
+    "recipe[metrics-repose::query]",
     "recipe[repose::filter-slf4j-http-logging]",
     "recipe[repose::filter-header-normalization]",
-    "recipe[repose::filter-header-translation]",
-    "recipe[repose::filter-header-identity]",
+    "recipe[repose::filter-keystone-v2]",
     "recipe[repose::filter-ip-identity]",
-    "recipe[repose::filter-uri-identity]",
-    "recipe[repose::filter-rackspace-auth-user]",
     "recipe[repose::filter-rate-limiting]",
-    "recipe[repose::filter-translation]",
-    "recipe[repose::filter-content-type-stripper]",
-    "recipe[repose::filter-client-authorization]",
-    "recipe[ele-repose::filter-extract-device-id]",
-    "recipe[ele-repose::filter-keystone-v2]",
-    "recipe[ele-repose::filter-merge-header]",
-    "recipe[ele-repose::filter-valkyrie-authorization]",
-
-    "recipe[repose::service-connection-pool]",
-    "recipe[repose::service-dist-datastore]",
-    "recipe[ele-repose::default]",
-    "recipe[minitest-handler]"
+    "recipe[repose::filter-api-validator]"
   ]
   attributes:
-    repose:
-      client_auth:
-        auth_provider: 'OPENSTACK'
-      rewrite_host_header: false
+    blueflood:
+      query_servers: ["127.0.0.1"]
+      repose:
+        query:
+          container_port: "9011"
+- name: ingest
+  run_list: [
+    "recipe[metrics-repose::default]",
+    "recipe[metrics-repose::ingest]",
+    "recipe[repose::filter-slf4j-http-logging]",
+    "recipe[repose::filter-header-normalization]",
+    "recipe[repose::filter-keystone-v2]",
+    "recipe[repose::filter-ip-identity]",
+    "recipe[repose::filter-rate-limiting]",
+    "recipe[repose::filter-api-validator]"
+  ]
+  attributes:
+    blueflood:
+      query_servers: ["127.0.0.1"]
+      repose:
+        query:
+          container_port: "9001"

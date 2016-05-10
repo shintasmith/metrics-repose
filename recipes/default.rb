@@ -1,25 +1,7 @@
 require 'uri'
 
-include_recipe 'metrics-repose::log4j2'
-
-include_recipe 'repose::filter-header-normalization'
-include_recipe 'metrics-repose::filter-keystone-v2'
-include_recipe 'repose::filter-ip-identity'
-include_recipe 'repose::filter-rate-limiting'
-include_recipe 'repose::filter-api-validator'
-
-include_recipe 'repose::install'
-
-# ensure package init script is removed to avoid confusion
-file '/etc/init.d/repose-valve' do
-  action :delete
-end
-
-if node.chef_environment == 'dev'
-  node.set['repose']['jvm_minimum_heap_size'] = '1g'
-  node.set['repose']['jvm_maximum_heap_size'] = '1g'
-  node.set['repose']['jvm_maximum_file_descriptors'] = '16384'
-end
+include_recipe 'repose::default'
+#include_recipe 'metrics-repose::log4j2'
 
 # NOTE repose::default is mostly copied here due to the following code (which makes wrapping nigh impossible):
 # https://github.com/rackerlabs/cookbook-repose/blob/31a561526a1d393b1d7ef8370be26b3999e01f84/recipes/default.rb#L93
@@ -31,13 +13,22 @@ template '/etc/init/repose-valve.conf' do
   mode '0644'
 end
 
+# hack before getting upstream to have different startup scripts supported
+# delete /etc/init.d/repose-valve installed by package
+file '/etc/init.d/repose-valve' do
+  action :delete
+  manage_symlink_source true
+end
+# replace with a symlink to /lib/init/upstart-job
+link '/etc/init.d/repose-valve' do
+  to '/lib/init/upstart-job'
+end
+
 service 'repose-valve' do
   supports restart: true, status: true
   action [:enable, :start]
   provider Chef::Provider::Service::Upstart
 end
-
-include_recipe 'repose::load_peers' if node['repose']['peer_search_enabled']
 
 unless node['repose']['cluster_id'].nil?
   log "Please note that node['repose']['cluster_id'] is deprecated. We've set node['repose']['cluster_ids'] to [#{node['repose']['cluster_id']}] in an effort to maintain compatibility with earlier versions. This functionality will be removed in a future version."
@@ -50,38 +41,22 @@ directory node['repose']['config_directory'] do
   mode '0755'
 end
 
-services = node['repose']['services'].reject { |x| x == 'connection-pool' }
+services = node['repose']['services'].reject { |x| x == 'http-connection-pool' || x == 'response-messaging' }
+service_cluster_map = {
+  'dist-datastore'         => node['repose']['dist_datastore']['cluster_id']
+}
 
-node['repose']['services'].each do |service|
-  include_recipe "repose::service-#{service}"
-end
-
-metrics_credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node.env}")
-
-identity_url = URI.join(identity_url, '/').to_s # strip trailing path (repose adds it)
-
-node.set['repose']['keystone_v2']['identity_uri'] = identity_url
-node.set['repose']['keystone_v2']['identity_username'] = metrics_credentials['username']
-node.set['repose']['keystone_v2']['identity_password'] = metrics_credentials['password']
-
-# set non-default (environment-specific) configuration
-
-# TODO: these next two attr updates would break a default len > 1 list of peers (should iterate and update ports?)
-# update for stage/prod port
-node.set['repose']['peers'] = [{
-  cluster_id: 'repose',
-  id: 'repose_node',
-  hostname: node['network']['ipaddress_eth0'],
-  port: '8080'
-}]
+#metrics_credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node['environment']}")
+#node.set['repose']['keystone_v2']['identity_username'] = metrics_credentials['username']
+#node.set['repose']['keystone_v2']['identity_password'] = metrics_credentials['password']
 
 # update for stage/prod port
 node.set['repose']['endpoints'] = [{
   cluster_id: 'repose',
   id: 'public_api',
   protocol: 'http',
-  hostname: node['network']['ipaddress_eth0'],
-  port: '7000',
+  hostname: 'localhost',
+  port: '2500',
   root_path: '/',
   default: true
 }]
@@ -89,6 +64,7 @@ node.set['repose']['endpoints'] = [{
 # NOTE these hash keys should be left as strings or system-model.cfg.xml.erb will break
 filter_cluster_map = {
   'header-normalization'   => node['repose']['header_normalization']['cluster_id'],
+  'slf4j-http-logging'     => node['repose']['slf4j_http_logging']['cluster_id'],
   'keystone-v2'            => node['repose']['keystone_v2']['cluster_id'],
   'ip-identity'            => node['repose']['ip_identity']['cluster_id'],
   'rate-limiting'          => node['repose']['rate_limiting']['cluster_id'],
@@ -97,14 +73,11 @@ filter_cluster_map = {
 
 filter_uri_regex_map = {
   'header-normalization'   => node['repose']['header_normalization']['uri_regex'],
+  'slf4j-http-logging'     => node['repose']['slf4j_http_logging']['uri_regex'],
   'keystone-v2'            => node['repose']['keystone_v2']['uri_regex'],
   'ip-identity'            => node['repose']['ip_identity']['uri_regex'],
   'rate-limiting'          => node['repose']['rate_limiting']['uri_regex'],
   'api-validator'          => node['repose']['api_validator']['uri_regex']
-}
-
-service_cluster_map = {
-  :'dist-datastore' => node['repose']['dist_datastore']['cluster_id']
 }
 
 template "#{node['repose']['config_directory']}/system-model.cfg.xml" do
@@ -115,6 +88,8 @@ template "#{node['repose']['config_directory']}/system-model.cfg.xml" do
     cluster_ids: node['repose']['cluster_ids'],
     rewrite_host_header: node['repose']['rewrite_host_header'],
     nodes: node['repose']['peers'],
+    api_nodes: node['blueflood']['query_servers'],
+    query_port: node['blueflood']['repose']['query']['container_port'],
     services: services,
     service_cluster_map: service_cluster_map,
     filters: node['repose']['filters'],
