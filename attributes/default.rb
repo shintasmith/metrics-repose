@@ -8,7 +8,7 @@ default['repose']['filters'] = %w(
     slf4j-http-logging
     header-normalization
     keystone-v2
-    ip-identity
+    ip-user
     rate-limiting
     api-validator
     )
