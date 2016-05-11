@@ -16,16 +16,15 @@ suites:
     "recipe[repose::filter-slf4j-http-logging]",
     "recipe[repose::filter-header-normalization]",
     "recipe[repose::filter-keystone-v2]",
-    "recipe[repose::filter-ip-identity]",
+    "recipe[repose::filter-ip-user]",
     "recipe[repose::filter-rate-limiting]",
     "recipe[repose::filter-api-validator]"
   ]
   attributes:
-    blueflood:
-      query_servers: ["127.0.0.1"]
-      repose:
-        query:
-          container_port: "9011"
+    repose:
+      query_servers: ["127.0.0.1", "127.0.0.2"]
+      query:
+        container_port: "9001"
 - name: ingest
   run_list: [
     "recipe[metrics-repose::default]",
@@ -33,13 +32,12 @@ suites:
     "recipe[repose::filter-slf4j-http-logging]",
     "recipe[repose::filter-header-normalization]",
     "recipe[repose::filter-keystone-v2]",
-    "recipe[repose::filter-ip-identity]",
+    "recipe[repose::filter-ip-user]",
     "recipe[repose::filter-rate-limiting]",
     "recipe[repose::filter-api-validator]"
   ]
   attributes:
-    blueflood:
-      query_servers: ["127.0.0.1"]
-      repose:
-        query:
-          container_port: "9001"
+    repose:
+      ingest_servers: ["127.0.0.3", "127.0.0.4"]
+      ingest:
+        container_port: "9011"

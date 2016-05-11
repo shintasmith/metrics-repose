@@ -66,7 +66,7 @@ filter_cluster_map = {
   'header-normalization'   => node['repose']['header_normalization']['cluster_id'],
   'slf4j-http-logging'     => node['repose']['slf4j_http_logging']['cluster_id'],
   'keystone-v2'            => node['repose']['keystone_v2']['cluster_id'],
-  'ip-identity'            => node['repose']['ip_identity']['cluster_id'],
+  'ip-user'                => node['repose']['ip_user']['cluster_id'],
   'rate-limiting'          => node['repose']['rate_limiting']['cluster_id'],
   'api-validator'          => node['repose']['api_validator']['cluster_id']
 }
@@ -75,40 +75,7 @@ filter_uri_regex_map = {
   'header-normalization'   => node['repose']['header_normalization']['uri_regex'],
   'slf4j-http-logging'     => node['repose']['slf4j_http_logging']['uri_regex'],
   'keystone-v2'            => node['repose']['keystone_v2']['uri_regex'],
-  'ip-identity'            => node['repose']['ip_identity']['uri_regex'],
+  'ip-user'                => node['repose']['ip_user']['uri_regex'],
   'rate-limiting'          => node['repose']['rate_limiting']['uri_regex'],
   'api-validator'          => node['repose']['api_validator']['uri_regex']
 }
-
-template "#{node['repose']['config_directory']}/system-model.cfg.xml" do
-  owner node['repose']['owner']
-  group node['repose']['group']
-  mode '0644'
-  variables(
-    cluster_ids: node['repose']['cluster_ids'],
-    rewrite_host_header: node['repose']['rewrite_host_header'],
-    nodes: node['repose']['peers'],
-    api_nodes: node['blueflood']['query_servers'],
-    query_port: node['blueflood']['repose']['query']['container_port'],
-    services: services,
-    service_cluster_map: service_cluster_map,
-    filters: node['repose']['filters'],
-    filter_cluster_map: filter_cluster_map,
-    filter_uri_regex_map: filter_uri_regex_map,
-    endpoints: node['repose']['endpoints']
-  )
-  notifies :restart, 'service[repose-valve]'
-end
-
-template "#{node['repose']['config_directory']}/container.cfg.xml" do
-  owner node['repose']['owner']
-  group node['repose']['group']
-  mode '0644'
-  variables(
-    connection_timeout: node['repose']['connection_timeout'],
-    read_timeout: node['repose']['read_timeout'],
-    deploy_auto_clean: node['repose']['deploy_auto_clean'],
-    filter_check_interval: node['repose']['filter_check_interval']
-  )
-  notifies :restart, 'service[repose-valve]'
-end
