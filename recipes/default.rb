@@ -66,7 +66,7 @@ filter_cluster_map = {
   'header-normalization'   => node['repose']['header_normalization']['cluster_id'],
   'slf4j-http-logging'     => node['repose']['slf4j_http_logging']['cluster_id'],
   'keystone-v2'            => node['repose']['keystone_v2']['cluster_id'],
-  'ip-identity'            => node['repose']['ip_identity']['cluster_id'],
+  'ip-user'                => node['repose']['ip_user']['cluster_id'],
   'rate-limiting'          => node['repose']['rate_limiting']['cluster_id'],
   'api-validator'          => node['repose']['api_validator']['cluster_id']
 }
@@ -75,7 +75,7 @@ filter_uri_regex_map = {
   'header-normalization'   => node['repose']['header_normalization']['uri_regex'],
   'slf4j-http-logging'     => node['repose']['slf4j_http_logging']['uri_regex'],
   'keystone-v2'            => node['repose']['keystone_v2']['uri_regex'],
-  'ip-identity'            => node['repose']['ip_identity']['uri_regex'],
+  'ip-user'                => node['repose']['ip_user']['uri_regex'],
   'rate-limiting'          => node['repose']['rate_limiting']['uri_regex'],
   'api-validator'          => node['repose']['api_validator']['uri_regex']
 }

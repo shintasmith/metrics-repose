@@ -41,7 +41,7 @@ default['repose']['header_normalization']['blacklist'] = [{
   )
 }]
 
-
+default['repose']['ip_user']['cluster_id'] = ['all']
 
 ##### check on...
 #default['repose']['connection_pool']['socket_timeout'] = 600_000 # in millis

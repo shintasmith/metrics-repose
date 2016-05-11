@@ -5,19 +5,18 @@ if %w(stage prod perf01 qe01 qe02).any? { |e| e.include?(node.environment) }
 end
 
 node.set['repose']['cluster_ids'] = ['blueflood-query']
-# TODO loop through with query_servers
-node.set['repose']['peers'] = [{
-    'cluster_id' => 'blueflood-query',
-    'id' => '10.209.131.203',
-    'hostname' => '10.209.131.203',
-    'port' => 9001
-    },
-    {
-    'cluster_id' => 'blueflood-query',
-    'id' => '10.209.132.144',
-    'hostname' => '10.209.132.144',
-    'port' => 9001
-    }]
+
+repose_peers = Array.new
+node['repose']['query_servers'].each do |server|
+  repose_peers.push({
+    'cluster_id' => node['repose']['cluster_ids'].first,
+    'id' => server.to_s,
+    'hostname' => server.to_s,
+    'port' => node['repose']['query']['container_port']
+    })
+  end
+node.default['repose']['peers'] = repose_peers
+
 node.set['repose']['endpoints'] = [{
     'cluster_id' => 'blueflood-query',
     'id' => 'blueflood-query',
@@ -49,7 +48,8 @@ node.set['repose']['tenant_handling']['send_tenant_id_quality'] = {
     }
 node.set['repose']['http_connection_pool']['chunked_encoding'] = false
 node.set['repose']['dist_datastore']['port'] = 9012
-
+node.set['repose']['dist_datastore']['cluster_id'] = ['blueflood-query']
+node.set['repose']['ip_user']['cluster_id'] = ['all']
 node.set['repose']['api_validator']['cluster_id'] = ['all']
 node.set['repose']['api_validator']['wadl'] = 'blueflood-query.wadl'
 node.set['repose']['api_validator']['dot_output'] = '/tmp/blueflood-query.wadl.dot'

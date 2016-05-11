@@ -5,21 +5,18 @@ if %w(stage prod perf01 qe01 qe02).any? { |e| e.include?(node.environment) }
 end
 
 node.set['repose']['cluster_ids'] = ['blueflood-ingest']
-# TODO loop through with ingest_servers
-node.set['repose']['peers'] = [
-    {
-    'cluster_id' => 'blueflood-ingest',
-    'id' => '10.209.64.14',
-    'hostname' => '10.209.64.14',
-    'port' => 9011
-    },
-    {
-    'cluster_id' => 'blueflood-ingest',
-    'id' => '10.209.64.34',
-    'hostname' => '10.209.64.34',
-    'port' => 9011
-    }
-  ]
+
+repose_peers = Array.new
+node['repose']['ingest_servers'].each do |server|
+  repose_peers.push({
+    'cluster_id' => node['repose']['cluster_ids'].first,
+    'id' => server.to_s,
+    'hostname' => server.to_s,
+    'port' => node['repose']['ingest']['container_port']
+    })
+  end
+node.default['repose']['peers'] = repose_peers
+
 node.set['repose']['endpoints'] = [
     {
     'cluster_id' => 'blueflood-ingest',
@@ -42,6 +39,7 @@ node.set['repose']['keystone_v2']['cache'] = {
     }
 node.set['repose']['http_connection_pool']['chunked_encoding'] = false
 node.set['repose']['dist_datastore']['port'] = 9002
+node.set['repose']['dist_datastore']['cluster_id'] = ['blueflood-ingest']
 node.set['repose']['api_validator']['cluster_id'] = ['all']
 node.set['repose']['api_validator']['enable_rax_roles'] = true
 node.set['repose']['api_validator']['wadl'] = 'blueflood-ingest.wadl'
