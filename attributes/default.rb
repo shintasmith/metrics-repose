@@ -4,6 +4,9 @@ default['repose']['read_timeout'] = 600_000 # in millis
 default['repose']['content_body_read_limit'] = 32768
 default['repose']['client_request_logging'] = true
 
+default['repose']['ingest']['container_port'] = 9001
+default['repose']['query']['container_port'] = 9011
+
 default['repose']['filters'] = %w(
     slf4j-http-logging
     header-normalization

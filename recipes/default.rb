@@ -1,7 +1,6 @@
 require 'uri'
 
 include_recipe 'repose::default'
-#include_recipe 'metrics-repose::log4j2'
 
 # NOTE repose::default is mostly copied here due to the following code (which makes wrapping nigh impossible):
 # https://github.com/rackerlabs/cookbook-repose/blob/31a561526a1d393b1d7ef8370be26b3999e01f84/recipes/default.rb#L93
