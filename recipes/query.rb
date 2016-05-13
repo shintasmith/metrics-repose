@@ -1,10 +1,10 @@
-if %w(stage prod perf01 qe01 qe02).any? { |e| e.include?(node.environment) }
-  keystone_v2_credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node.environment}")
-  node.default['repose']['keystone_v2']['identity_username'] = keystone_v2_credentials['username']
-  node.default['repose']['keystone_v2']['identity_password'] = keystone_v2_credentials['password']
-end
-
 node.default['repose']['cluster_ids'] = ['blueflood-query']
+
+if %w(stage prod perf01 qe01 qe02).any? { |e| e.include?(node.environment) }
+  credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node.environment}")
+  node.default['repose']['keystone_v2']['username_admin'] = credentials['username']
+  node.default['repose']['keystone_v2']['password_admin'] = credentials['password']
+end
 
 repose_peers = []
 node['blueflood']['query_servers'].each do |server|
@@ -21,7 +21,8 @@ node.default['repose']['endpoints'] = [{
   'protocol' => 'http',
   'hostname' => 'localhost',
   'root_path' => '',
-  'port' => 2500
+  'port' => 2500,
+  'default' => true
 }]
 
 node.default['repose']['slf4j_http_logging']['id'] = 'query-repose-http-log'
