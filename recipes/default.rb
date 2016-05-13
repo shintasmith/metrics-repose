@@ -1,7 +1,6 @@
 require 'uri'
 
 include_recipe 'repose::default'
-#include_recipe 'metrics-repose::log4j2'
 
 # NOTE repose::default is mostly copied here due to the following code (which makes wrapping nigh impossible):
 # https://github.com/rackerlabs/cookbook-repose/blob/31a561526a1d393b1d7ef8370be26b3999e01f84/recipes/default.rb#L93
@@ -13,7 +12,7 @@ template '/etc/init/repose-valve.conf' do
   mode '0644'
 end
 
-# hack before getting upstream to have different startup scripts supported
+# HACK: before getting upstream to have different startup scripts supported
 # delete /etc/init.d/repose-valve installed by package
 file '/etc/init.d/repose-valve' do
   action :delete
@@ -43,12 +42,12 @@ end
 
 services = node['repose']['services'].reject { |x| x == 'http-connection-pool' || x == 'response-messaging' }
 service_cluster_map = {
-  'dist-datastore'         => node['repose']['dist_datastore']['cluster_id']
+  'dist-datastore' => node['repose']['dist_datastore']['cluster_id']
 }
 
-#metrics_credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node['environment']}")
-#node.set['repose']['keystone_v2']['identity_username'] = metrics_credentials['username']
-#node.set['repose']['keystone_v2']['identity_password'] = metrics_credentials['password']
+# metrics_credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node['environment']}")
+# node.set['repose']['keystone_v2']['identity_username'] = metrics_credentials['username']
+# node.set['repose']['keystone_v2']['identity_password'] = metrics_credentials['password']
 
 # update for stage/prod port
 node.set['repose']['endpoints'] = [{

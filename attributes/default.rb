@@ -4,18 +4,21 @@ default['repose']['read_timeout'] = 600_000 # in millis
 default['repose']['content_body_read_limit'] = 32768
 default['repose']['client_request_logging'] = true
 
+default['repose']['ingest']['container_port'] = 9001
+default['repose']['query']['container_port'] = 9011
+
 default['repose']['filters'] = %w(
-    slf4j-http-logging
-    header-normalization
-    keystone-v2
-    ip-user
-    rate-limiting
-    api-validator
-    )
+  slf4j-http-logging
+  header-normalization
+  keystone-v2
+  ip-user
+  rate-limiting
+  api-validator
+)
 default['repose']['services'] = %w(
-    dist-datastore
-    http-connection-pool
-    )
+  dist-datastore
+  http-connection-pool
+)
 default['repose']['http_connection_pool']['chunked_encoding'] = false
 default['repose']['header_normalization']['blacklist'] = [{
   id: 'authorization',
@@ -44,28 +47,28 @@ default['repose']['header_normalization']['blacklist'] = [{
 default['repose']['ip_user']['cluster_id'] = ['all']
 
 ##### check on...
-#default['repose']['connection_pool']['socket_timeout'] = 600_000 # in millis
-#default['repose']['connection_pool']['connection_timeout'] = 30_000 # in millis
-#default['repose']['connection_pool']['max_total'] = 1000
-#default['repose']['connection_pool']['max_per_route'] = 500
+# default['repose']['connection_pool']['socket_timeout'] = 600_000 # in millis
+# default['repose']['connection_pool']['connection_timeout'] = 30_000 # in millis
+# default['repose']['connection_pool']['max_total'] = 1000
+# default['repose']['connection_pool']['max_per_route'] = 500
 #
-#default['repose']['header_normalization']['cluster_id'] = ['all']
-#default['repose']['header_normalization']['uri_regex'] = nil
-#default['repose']['header_normalization']['whitelist'] = []
+# default['repose']['header_normalization']['cluster_id'] = ['all']
+# default['repose']['header_normalization']['uri_regex'] = nil
+# default['repose']['header_normalization']['whitelist'] = []
 #
-#default['repose']['jvm_minimum_heap_size'] = '2g'
-#default['repose']['jvm_maximum_heap_size'] = '4g'
-#default['repose']['jvm_maximum_file_descriptors'] = '65535'
+# default['repose']['jvm_minimum_heap_size'] = '2g'
+# default['repose']['jvm_maximum_heap_size'] = '4g'
+# default['repose']['jvm_maximum_file_descriptors'] = '65535'
 
-#default['repose']['rate_limiting']['cluster_id'] = ['all']
-#default['repose']['rate_limiting']['uri_regex'] = '/v[0-9.]+/(hybrid:)?[0-9]+/limits/?'
-#default['repose']['rate_limiting']['include_absolute_limits'] = true
-#default['repose']['rate_limiting']['global_limit_id'] = 'global'
-#default['repose']['rate_limiting']['global_limit_uri'] = '*'
-#default['repose']['rate_limiting']['global_limit_uri_regex'] = '.*'
-#default['repose']['rate_limiting']['global_limit_value'] = 1000
-#default['repose']['rate_limiting']['global_limit_unit'] = 'MINUTE'
-#default['repose']['rate_limiting']['limit_groups'] = [
+# default['repose']['rate_limiting']['cluster_id'] = ['all']
+# default['repose']['rate_limiting']['uri_regex'] = '/v[0-9.]+/(hybrid:)?[0-9]+/limits/?'
+# default['repose']['rate_limiting']['include_absolute_limits'] = true
+# default['repose']['rate_limiting']['global_limit_id'] = 'global'
+# default['repose']['rate_limiting']['global_limit_uri'] = '*'
+# default['repose']['rate_limiting']['global_limit_uri_regex'] = '.*'
+# default['repose']['rate_limiting']['global_limit_value'] = 1000
+# default['repose']['rate_limiting']['global_limit_unit'] = 'MINUTE'
+# default['repose']['rate_limiting']['limit_groups'] = [
 #  { 'id' => 'main',
 #    'groups' => 'IP_Standard',
 #    'default' => true,
@@ -84,5 +87,5 @@ default['repose']['ip_user']['cluster_id'] = ['all']
 #    'default' => false,
 #    'limits' => []
 #  }
-#]
+# ]
 #
