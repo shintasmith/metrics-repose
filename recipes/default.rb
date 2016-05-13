@@ -1,5 +1,4 @@
 require 'uri'
-
 include_recipe 'repose::default'
 
 # NOTE repose::default is mostly copied here due to the following code (which makes wrapping nigh impossible):
@@ -45,12 +44,8 @@ service_cluster_map = {
   'dist-datastore' => node['repose']['dist_datastore']['cluster_id']
 }
 
-# metrics_credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node['environment']}")
-# node.set['repose']['keystone_v2']['identity_username'] = metrics_credentials['username']
-# node.set['repose']['keystone_v2']['identity_password'] = metrics_credentials['password']
-
 # update for stage/prod port
-node.set['repose']['endpoints'] = [{
+node.default['repose']['endpoints'] = [{
   cluster_id: 'repose',
   id: 'public_api',
   protocol: 'http',
