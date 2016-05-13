@@ -6,37 +6,35 @@ end
 
 node.default['repose']['cluster_ids'] = ['blueflood-ingest']
 
-repose_peers = Array.new
+repose_peers = []
 node['blueflood']['ingest_servers'].each do |server|
-  repose_peers.push({
-    'cluster_id' => node['repose']['cluster_ids'].first,
-    'id' => server.to_s,
-    'hostname' => server.to_s,
-    'port' => node['repose']['ingest']['container_port']
-    })
-  end
+  repose_peers.push('cluster_id' => node['repose']['cluster_ids'].first,
+                    'id' => server.to_s,
+                    'hostname' => server.to_s,
+                    'port' => node['repose']['ingest']['container_port'])
+end
 node.default['repose']['peers'] = repose_peers
 
 node.default['repose']['endpoints'] = [
-    {
+  {
     'cluster_id' => 'blueflood-ingest',
     'id' => 'blueflood-ingest',
     'protocol' => 'http',
     'hostname' => 'localhost',
     'root_path' => '',
     'port' => 2440
-    }
-  ]
+  }
+]
 node.default['repose']['slf4j_http_logging']['id'] = 'ingest-repose-http-log'
 node.default['repose']['keystone_v2']['white_list'] = %w(
   /blueflood-ingest.wadl$
 )
 node.default['repose']['keystone_v2']['cache'] = {
-    'timeout_variability' => 10,
-    'token_timeout' => 600,
-    'group_timeout' => 600,
-    'endpoints_timeout' => 600
-    }
+  'timeout_variability' => 10,
+  'token_timeout' => 600,
+  'group_timeout' => 600,
+  'endpoints_timeout' => 600
+}
 node.default['repose']['http_connection_pool']['chunked_encoding'] = false
 node.default['repose']['dist_datastore']['port'] = 9002
 node.default['repose']['dist_datastore']['cluster_id'] = ['blueflood-ingest']

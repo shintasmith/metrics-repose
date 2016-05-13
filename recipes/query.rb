@@ -6,25 +6,23 @@ end
 
 node.default['repose']['cluster_ids'] = ['blueflood-query']
 
-repose_peers = Array.new
+repose_peers = []
 node['blueflood']['query_servers'].each do |server|
-  repose_peers.push({
-    'cluster_id' => node['repose']['cluster_ids'].first,
-    'id' => server.to_s,
-    'hostname' => server.to_s,
-    'port' => node['repose']['query']['container_port']
-    })
-  end
+  repose_peers.push('cluster_id' => node['repose']['cluster_ids'].first,
+                    'id' => server.to_s,
+                    'hostname' => server.to_s,
+                    'port' => node['repose']['query']['container_port'])
+end
 node.default['repose']['peers'] = repose_peers
 
 node.default['repose']['endpoints'] = [{
-    'cluster_id' => 'blueflood-query',
-    'id' => 'blueflood-query',
-    'protocol' => 'http',
-    'hostname' => 'localhost',
-    'root_path' => '',
-    'port' => 2500
-    }]
+  'cluster_id' => 'blueflood-query',
+  'id' => 'blueflood-query',
+  'protocol' => 'http',
+  'hostname' => 'localhost',
+  'root_path' => '',
+  'port' => 2500
+}]
 
 node.default['repose']['slf4j_http_logging']['id'] = 'query-repose-http-log'
 
@@ -32,20 +30,20 @@ node.default['repose']['keystone_v2']['white_list'] = %w(
   /blueflood-query\.wadl$
 )
 node.default['repose']['keystone_v2']['cache'] = {
-    'timeout_variability' => 10,
-    'token_timeout' => 600,
-    'group_timeout' => 600,
-    'endpoints_timeout' => 600
-    }
+  'timeout_variability' => 10,
+  'token_timeout' => 600,
+  'group_timeout' => 600,
+  'endpoints_timeout' => 600
+}
 node.default['repose']['tenant_handling']['send_all_tenant_ids'] = true
 node.default['repose']['tenant_handling']['validate_tenant'] = {
-    'url_extraction_regex' => '.*'
-    }
+  'url_extraction_regex' => '.*'
+}
 node.default['repose']['tenant_handling']['send_tenant_id_quality'] = {
-    'default' => '1.0',
-    'roles' => '0.5',
-    'uri' => '0.5'
-    }
+  'default' => '1.0',
+  'roles' => '0.5',
+  'uri' => '0.5'
+}
 node.default['repose']['http_connection_pool']['chunked_encoding'] = false
 node.default['repose']['dist_datastore']['port'] = 9012
 node.default['repose']['dist_datastore']['cluster_id'] = ['blueflood-query']
