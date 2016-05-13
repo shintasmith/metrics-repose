@@ -30,6 +30,8 @@ node.default['repose']['slf4j_http_logging']['id'] = 'query-repose-http-log'
 node.default['repose']['keystone_v2']['white_list'] = %w(
   /blueflood-query\.wadl$
 )
+node.default['repose']['keystone_v2']['groups_in_header'] = true
+node.default['repose']['keystone_v2']['uri'] = 'https://identity.api.rackspacecloud.com'
 node.default['repose']['keystone_v2']['cache'] = {
   'timeout_variability' => 10,
   'token_timeout' => 600,
