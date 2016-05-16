@@ -1,4 +1,4 @@
-default['repose']['version'] = '7.3.3.2'
+default['repose']['version'] = '7.3.5.0'
 default['repose']['connection_timeout'] = 30_000 # in millis
 default['repose']['read_timeout'] = 600_000 # in millis
 default['repose']['client_request_logging'] = true
