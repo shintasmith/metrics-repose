@@ -1,7 +1,6 @@
 default['repose']['version'] = '7.3.3.2'
 default['repose']['connection_timeout'] = 30_000 # in millis
 default['repose']['read_timeout'] = 600_000 # in millis
-default['repose']['content_body_read_limit'] = 32768
 default['repose']['client_request_logging'] = true
 
 default['repose']['ingest']['container_port'] = 9001

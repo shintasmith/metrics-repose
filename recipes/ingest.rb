@@ -1,4 +1,5 @@
 node.default['repose']['cluster_ids'] = ['blueflood-ingest']
+node.default['repose']['content_body_read_limit'] = 1048576
 
 if %w(stage prod perf01 qe01 qe02).any? { |e| e.include?(node.environment) }
   credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node.environment}")
@@ -14,6 +15,15 @@ node['blueflood']['ingest_servers'].each do |server|
                     'port' => node['repose']['ingest']['container_port'])
 end
 node.default['repose']['peers'] = repose_peers
+
+node.default['repose']['appenders'] = ['<RollingFile name="blueflood-ingest" fileName="/var/log/repose/blueflood-ingest.log"
+                     filePattern="/var/log/repose/blueflood-ingest-%d{yyyy-MM-dd_HHmmss}.log">
+            <PatternLayout pattern="%m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1024 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>']
 
 node.default['repose']['endpoints'] = [
   {
@@ -58,8 +68,8 @@ node.default['repose']['rate_limiting']['limit_groups'] = [
     'limits' => [
       { 'id' => '/version/tenantId/*',
         'uri' => '/version/tenantId/*',
-        'uri-regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
-        'http-methods' => 'ALL',
+        'uri_regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
+        'http_methods' => 'ALL',
         'unit' => 'MINUTE',
         'value' => 10000
       }
