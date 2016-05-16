@@ -24,6 +24,9 @@ node.default['repose']['appenders'] = ['<RollingFile name="blueflood-query" file
             </Policies>
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>']
+node.default['repose']['loggers'] = ['<Logger name="query-repose-http-log" level="info">
+            <AppenderRef ref="blueflood-query"/>
+        </Logger>']
 
 node.default['repose']['endpoints'] = [{
   'cluster_id' => 'blueflood-query',

@@ -6,6 +6,10 @@ default['repose']['client_request_logging'] = true
 default['repose']['ingest']['container_port'] = 9001
 default['repose']['query']['container_port'] = 9011
 
+default['repose']['slf4j_http_logging']['format'] ='<![CDATA[
+            { "received": "%t", "duration": "%T", "method": "%m", "path": "%U", "status": "%s", "remote_ip": "%a", "x_forwarded_for": "%{x-forwarded-for}i", "x_real_ip": "%{x-real-ip}i", "remote_host": "%h", "remote_user":            "%u", "response_size": "%b", "query_string": "%q", "local_ip": "%A", "server_port": "%p", "user_agent":            "%{user-agent}i", "content_type": "%{content-type}i", "accept": "%{accept}i", "rate_limit_group":            "%{X-PP-Groups}i" }
+            ]]>'
+
 default['repose']['filters'] = %w(
   slf4j-http-logging
   header-normalization

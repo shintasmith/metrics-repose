@@ -24,6 +24,9 @@ node.default['repose']['appenders'] = ['<RollingFile name="blueflood-ingest" fil
             </Policies>
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>']
+node.default['repose']['loggers'] = ['<Logger name="ingest-repose-http-log" level="info">
+            <AppenderRef ref="blueflood-ingest"/>
+        </Logger>']
 
 node.default['repose']['endpoints'] = [
   {
