@@ -1,5 +1,5 @@
 node.default['repose']['cluster_ids'] = ['blueflood-ingest']
-node.default['repose']['content_body_read_limit'] = 1048576
+node.default['repose']['content_body_read_limit'] = 1_048_576
 
 if %w(stage prod perf01 qe01 qe02).any? { |e| e.include?(node.environment) }
   credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node.environment}")
