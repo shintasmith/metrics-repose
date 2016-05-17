@@ -8,6 +8,7 @@ default['repose']['jvm_maximum_file_descriptors'] = '65535'
 
 default['repose']['ingest']['container_port'] = 9001
 default['repose']['query']['container_port'] = 9011
+default['repose']['graphite_port'] = '2003'
 
 default['repose']['slf4j_http_logging']['format'] = '<![CDATA[
             { "received": "%t", "duration": "%T", "method": "%m", "path": "%U", "status": "%s", "remote_ip": "%a", "x_forwarded_for": "%{x-forwarded-for}i", "x_real_ip": "%{x-real-ip}i", "remote_host": "%h", "remote_user":            "%u", "response_size": "%b", "query_string": "%q", "local_ip": "%A", "server_port": "%p", "user_agent":            "%{user-agent}i", "content_type": "%{content-type}i", "accept": "%{accept}i", "rate_limit_group":            "%{X-PP-Groups}i" }
@@ -61,33 +62,3 @@ default['repose']['ip_user']['cluster_id'] = ['all']
 # default['repose']['header_normalization']['cluster_id'] = ['all']
 # default['repose']['header_normalization']['uri_regex'] = nil
 # default['repose']['header_normalization']['whitelist'] = []
-#
-# default['repose']['rate_limiting']['cluster_id'] = ['all']
-# default['repose']['rate_limiting']['uri_regex'] = '/v[0-9.]+/(hybrid:)?[0-9]+/limits/?'
-# default['repose']['rate_limiting']['include_absolute_limits'] = true
-# default['repose']['rate_limiting']['global_limit_id'] = 'global'
-# default['repose']['rate_limiting']['global_limit_uri'] = '*'
-# default['repose']['rate_limiting']['global_limit_uri_regex'] = '.*'
-# default['repose']['rate_limiting']['global_limit_value'] = 1000
-# default['repose']['rate_limiting']['global_limit_unit'] = 'MINUTE'
-# default['repose']['rate_limiting']['limit_groups'] = [
-#  { 'id' => 'main',
-#    'groups' => 'IP_Standard',
-#    'default' => true,
-#    'limits' => [
-#      { 'id' => '/version/tenantId/*',
-#        'uri' => '/version/tenantId/*',
-#        'uri-regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
-#        'http-methods' => 'ALL',
-#        'unit' => 'MINUTE',
-#        'value' => 10000
-#      }
-#    ]
-#  },
-#  { 'id' => 'unlimited',
-#    'groups' => 'unlimited',
-#    'default' => false,
-#    'limits' => []
-#  }
-# ]
-#

@@ -28,6 +28,13 @@ service 'repose-valve' do
   provider Chef::Provider::Service::Upstart
 end
 
+template '/etc/repose/metrics.cfg.xml' do
+  source 'metrics.cfg.xml.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+end
+
 unless node['repose']['cluster_id'].nil?
   log "Please note that node['repose']['cluster_id'] is deprecated. We've set node['repose']['cluster_ids'] to [#{node['repose']['cluster_id']}] in an effort to maintain compatibility with earlier versions. This functionality will be removed in a future version."
   node.normal['repose']['cluster_ids'] = [node['repose']['cluster_id']]
