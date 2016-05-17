@@ -2,7 +2,7 @@ node.default['repose']['cluster_ids'] = ['blueflood-query']
 node.default['repose']['content_body_read_limit'] = 32768
 
 cookbook_file '/etc/repose/blueflood-query.wadl'
-  
+
 if %w(stage prod perf01 qe01 qe02).any? { |e| e.include?(node.environment) }
   credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node.environment}")
   node.default['repose']['keystone_v2']['username_admin'] = credentials['username']
