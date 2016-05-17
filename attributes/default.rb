@@ -26,7 +26,16 @@ default['repose']['services'] = %w(
   dist-datastore
   http-connection-pool
 )
+
 default['repose']['http_connection_pool']['chunked_encoding'] = false
+default['repose']['connection_pool']['socket_timeout'] = 600_000 # in millis
+default['repose']['connection_pool']['connection_timeout'] = 30_000 # in millis
+default['repose']['connection_pool']['max_total'] = 1000
+default['repose']['connection_pool']['max_per_route'] = 500
+
+default['repose']['header_normalization']['cluster_id'] = ['all']
+default['repose']['header_normalization']['uri_regex'] = nil
+default['repose']['header_normalization']['whitelist'] = []
 default['repose']['header_normalization']['blacklist'] = [{
   id: 'authorization',
   http_methods: 'ALL',
@@ -52,13 +61,3 @@ default['repose']['header_normalization']['blacklist'] = [{
 }]
 
 default['repose']['ip_user']['cluster_id'] = ['all']
-
-##### check on...
-# default['repose']['connection_pool']['socket_timeout'] = 600_000 # in millis
-# default['repose']['connection_pool']['connection_timeout'] = 30_000 # in millis
-# default['repose']['connection_pool']['max_total'] = 1000
-# default['repose']['connection_pool']['max_per_route'] = 500
-#
-# default['repose']['header_normalization']['cluster_id'] = ['all']
-# default['repose']['header_normalization']['uri_regex'] = nil
-# default['repose']['header_normalization']['whitelist'] = []

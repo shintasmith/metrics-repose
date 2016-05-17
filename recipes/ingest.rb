@@ -86,7 +86,7 @@ node.default['repose']['rate_limiting']['global_limits'] = [
   }
 ]
 node.default['repose']['rate_limiting']['limit_groups'] = [
-  { 'id' => 'main',
+  { 'id' => 'match-all',
     'groups' => 'IP_Standard',
     'default' => true,
     'limits' => [
@@ -98,10 +98,5 @@ node.default['repose']['rate_limiting']['limit_groups'] = [
         'value' => 1000
       }
     ]
-  },
-  { 'id' => 'unlimited',
-    'groups' => 'unlimited',
-    'default' => false,
-    'limits' => []
   }
 ]
