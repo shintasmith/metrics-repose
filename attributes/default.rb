@@ -2,6 +2,9 @@ default['repose']['version'] = '7.3.5.0'
 default['repose']['connection_timeout'] = 30_000 # in millis
 default['repose']['read_timeout'] = 30_000 # in millis
 default['repose']['client_request_logging'] = true
+default['repose']['jvm_minimum_heap_size'] = '4g'
+default['repose']['jvm_maximum_heap_size'] = '4g'
+default['repose']['jvm_maximum_file_descriptors'] = '65535'
 
 default['repose']['ingest']['container_port'] = 9001
 default['repose']['query']['container_port'] = 9011
@@ -59,10 +62,6 @@ default['repose']['ip_user']['cluster_id'] = ['all']
 # default['repose']['header_normalization']['uri_regex'] = nil
 # default['repose']['header_normalization']['whitelist'] = []
 #
-# default['repose']['jvm_minimum_heap_size'] = '2g'
-# default['repose']['jvm_maximum_heap_size'] = '4g'
-# default['repose']['jvm_maximum_file_descriptors'] = '65535'
-
 # default['repose']['rate_limiting']['cluster_id'] = ['all']
 # default['repose']['rate_limiting']['uri_regex'] = '/v[0-9.]+/(hybrid:)?[0-9]+/limits/?'
 # default['repose']['rate_limiting']['include_absolute_limits'] = true
