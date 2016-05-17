@@ -1,8 +1,8 @@
 <metrics xmlns='http://docs.rackspacecloud.com/repose/metrics/v1.0'>
     <graphite>
-        <server host="<% @node['graphite']['server'] %>"
-              port="<% @node['repose']['graphite_port'] %>"
+        <server host="<%= node['graphite']['server'] %>"
+              port="<%= node['repose']['graphite_port'] %>"
               period="10"
-              prefix="<% node.fqdn %>" />
+              prefix="<%= node.fqdn %>" />
     </graphite>
 </metrics>

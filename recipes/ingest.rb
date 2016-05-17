@@ -80,7 +80,7 @@ node.default['repose']['rate_limiting']['global_limits'] = [
   { 'id' => 'global',
     'uri' => '*',
     'uri-regex' => '*',
-    'value' => 100000,
+    'value' => 100_000,
     'http-methods' => 'ALL',
     'unit' => 'MINUTE'
   }
