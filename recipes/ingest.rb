@@ -76,6 +76,7 @@ node.default['repose']['api_validator']['join_xpath_checks'] = false
 node.default['repose']['rate_limiting']['cluster_id'] = ['all']
 node.default['repose']['rate_limiting']['uri_regex'] = '/v[0-9.]+/(hybrid:)?[0-9]+/limits/?'
 node.default['repose']['rate_limiting']['include_absolute_limits'] = true
+node.default['repose']['rate_limiting']['use_capture_groups'] = false
 node.default['repose']['rate_limiting']['global_limits'] = [
   { 'id' => 'global',
     'uri' => '*',
