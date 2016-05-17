@@ -2,13 +2,14 @@ description "Upstart job file for starting repose"
 
 start on runlevel [2345]
 
+console log
 respawn
+respawn limit 5 60
 
-env uid=repose
-env gid=repose
-console none
+setuid repose
 
 script
+    export JAVA_HOME=/usr/lib/jvm/java-7-oracle-amd64
     export JAVA_BIN=${JAVA_HOME}/bin/java
     export CONFIG_DIRECTORY=/etc/repose
     export DAEMON_HOME=/usr/share/repose

@@ -1,6 +1,8 @@
 node.default['repose']['cluster_ids'] = ['blueflood-ingest']
 node.default['repose']['content_body_read_limit'] = 1_048_576
 
+cookbook_file '/etc/repose/blueflood-ingest.wadl'
+
 if %w(stage prod perf01 qe01 qe02).any? { |e| e.include?(node.environment) }
   credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node.environment}")
   node.default['repose']['keystone_v2']['username_admin'] = credentials['username']
@@ -16,6 +18,11 @@ node['blueflood']['ingest_servers'].each do |server|
 end
 node.default['repose']['peers'] = repose_peers
 
+file 'var/log/repose/blueflood-ingest.log' do
+  user 'root'
+  group 'root'
+  mode 0644
+end
 node.default['repose']['appenders'] = ['<RollingFile name="blueflood-ingest" fileName="/var/log/repose/blueflood-ingest.log"
                      filePattern="/var/log/repose/blueflood-ingest-%d{yyyy-MM-dd_HHmmss}.log">
             <PatternLayout pattern="%m%n"/>
@@ -52,9 +59,19 @@ node.default['repose']['http_connection_pool']['chunked_encoding'] = false
 node.default['repose']['dist_datastore']['port'] = 9002
 node.default['repose']['dist_datastore']['cluster_id'] = ['blueflood-ingest']
 node.default['repose']['api_validator']['cluster_id'] = ['all']
-node.default['repose']['api_validator']['enable_rax_roles'] = true
 node.default['repose']['api_validator']['wadl'] = 'blueflood-ingest.wadl'
-node.default['repose']['api_validator']['dot_output'] = nil
+node.default['repose']['api_validator']['dot_output'] = '/tmp/blueflood-ingest.wadl.dot'
+node.default['repose']['api_validator']['enable_rax_roles'] = true
+node.default['repose']['api_validator']['check_well_formed'] = false
+node.default['repose']['api_validator']['check_grammars'] = true
+node.default['repose']['api_validator']['check_elements'] = true
+node.default['repose']['api_validator']['check_plain_params'] = true
+node.default['repose']['api_validator']['do_xsd_grammar_transform'] = true
+node.default['repose']['api_validator']['enable_pre_process_extension'] = true
+node.default['repose']['api_validator']['remove_dups'] = true
+node.default['repose']['api_validator']['xpath_version'] = '2'
+node.default['repose']['api_validator']['xsl_engine'] = 'XalanC'
+node.default['repose']['api_validator']['join_xpath_checks'] = false
 
 node.default['repose']['rate_limiting']['cluster_id'] = ['all']
 node.default['repose']['rate_limiting']['uri_regex'] = '/v[0-9.]+/(hybrid:)?[0-9]+/limits/?'
@@ -74,7 +91,7 @@ node.default['repose']['rate_limiting']['limit_groups'] = [
         'uri_regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
         'http_methods' => 'ALL',
         'unit' => 'MINUTE',
-        'value' => 10000
+        'value' => 1000
       }
     ]
   },

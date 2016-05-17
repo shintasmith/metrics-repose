@@ -1,6 +1,8 @@
 node.default['repose']['cluster_ids'] = ['blueflood-query']
 node.default['repose']['content_body_read_limit'] = 32768
 
+cookbook_file '/etc/repose/blueflood-query.wadl'
+
 if %w(stage prod perf01 qe01 qe02).any? { |e| e.include?(node.environment) }
   credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node.environment}")
   node.default['repose']['keystone_v2']['username_admin'] = credentials['username']
@@ -16,6 +18,11 @@ node['blueflood']['query_servers'].each do |server|
 end
 node.default['repose']['peers'] = repose_peers
 
+file 'var/log/repose/blueflood-query.log' do
+  user 'root'
+  group 'root'
+  mode 0644
+end
 node.default['repose']['appenders'] = ['<RollingFile name="blueflood-query" fileName="/var/log/repose/blueflood-query.log"
                      filePattern="/var/log/repose/blueflood-query-%d{yyyy-MM-dd_HHmmss}.log">
             <PatternLayout pattern="%m%n"/>
@@ -93,7 +100,7 @@ node.default['repose']['rate_limiting']['limit_groups'] = [
         'uri_regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
         'http_methods' => 'ALL',
         'unit' => 'MINUTE',
-        'value' => 10000
+        'value' => 1500
       }
     ]
   },
