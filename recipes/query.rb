@@ -87,7 +87,7 @@ node.default['repose']['rate_limiting']['uri_regex'] = '/v[0-9.]+/(hybrid:)?[0-9
 node.default['repose']['rate_limiting']['include_absolute_limits'] = true
 node.default['repose']['rate_limiting']['use_capture_groups'] = false
 node.default['repose']['rate_limiting']['global_limits'] = [
-  { 
+  {
     'id' => 'global',
     'uri' => '*',
     'uri-regex' => '.*',
@@ -97,12 +97,12 @@ node.default['repose']['rate_limiting']['global_limits'] = [
   }
 ]
 node.default['repose']['rate_limiting']['limit_groups'] = [
-  { 
+  {
     'id' => 'match-all',
     'groups' => 'IP_Standard',
     'default' => true,
     'limits' => [
-      { 
+      {
         'id' => 'version-tenantId',
         'uri' => '/version/tenantId/*',
         'uri_regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
