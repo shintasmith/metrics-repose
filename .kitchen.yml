@@ -25,8 +25,7 @@ suites:
       query_servers: ["127.0.0.1", "127.0.0.2"]
       query:
         container_port: "9001"
-    graphite:
-      server: "127.0.0.1"
+    graphite_ip: "127.0.0.1"
 - name: ingest
   run_list: [
     "recipe[metrics-repose::ingest]",
@@ -43,5 +42,4 @@ suites:
       ingest_servers: ["127.0.0.3", "127.0.0.4"]
       ingest:
         container_port: "9011"
-    graphite:
-      server: "127.0.0.1"
+    graphite_ip: "127.0.0.1"
