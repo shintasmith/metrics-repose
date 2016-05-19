@@ -31,20 +31,11 @@
                                 </method>
                             </resource>
                         </resource>
-                        <resource path="histograms" id="experimental_histograms">
-                            <resource path="{metric_name}" id="experimental_histogram">
-                                <param name="metric_name" type="xsd:string" required="true" style="template">
-                                    <doc>metric name</doc>
-                                </param>
-                                <method name="GET">
-                                </method>
-                            </resource>
-                        </resource>
                     </resource>
                 </resource>
             </resource>
         </resource>
-        <resource path="v2.0" id="version" rax:roles="monitoring:admin identity:user-admin admin">
+        <resource path="v2.0" id="version" rax:roles="monitoring:admin identity:user-admin admin cloudmetrics:service-admin cloudmetrics:creator">
             <method name="GET" rax:roles="cloudmetrics:observer">
             </method>
             <resource path="{tenantId}" rax:roles="cloudmetrics:observer monitoring:observer observer monitoring:creator" id="tenantid">
@@ -104,15 +95,6 @@
                         <method name="GET">
                         </method>
                     </resource>
-                    <resource path="histograms" id="histogram_metrics">
-                        <resource path="{metric_name}" id="histogram_metric_name">
-                            <param name="metric_name" type="xsd:string" required="true" style="template">
-                                <doc>metric name</doc>
-                            </param>
-                            <method name="GET">
-                            </method>
-                        </resource>
-                    </resource>
                 </resource>
                 <resource path="metrics">
                     <resource path="search">
@@ -127,6 +109,22 @@
                         <method name="OPTIONS">
                         </method>
                     </resource>
+                </resource>
+                <resource path="metric_name/search">
+                    <param name="query" type="xsd:string" required="true" style="template">
+                        <doc>
+                            This parameter is used to query for metric names using
+                            wild cards. (It is a glob representation).
+
+                            For example: GET /metrics/find?query=app.*
+                            To get all metric names with app as its first node.
+                        </doc>
+                    </param>
+                    <method name="GET">
+                        <doc>
+                            Retrieves a list of available metric names.
+                        </doc>
+                    </method>
                 </resource>
             </resource>
         </resource>
