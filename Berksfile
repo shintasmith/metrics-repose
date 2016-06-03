@@ -4,4 +4,4 @@ metadata
 
 cookbook 'apt', '~> 3.0.0'
 cookbook 'java'
-cookbook 'repose', git: 'https://github.com/rackerlabs/cookbook-repose.git', tag: '3.3.3'
+cookbook 'repose', git: 'https://github.com/rackerlabs/cookbook-repose.git'

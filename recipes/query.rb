@@ -1,6 +1,8 @@
 node.default['repose']['cluster_ids'] = ['blueflood-query']
 node.default['repose']['content_body_read_limit'] = 32768
 
+include_recipe 'repose::install'
+
 cookbook_file '/etc/repose/blueflood-query.wadl'
 
 if %w(stage prod perf01 qe01 qe02).any? { |e| e.include?(node.environment) }
