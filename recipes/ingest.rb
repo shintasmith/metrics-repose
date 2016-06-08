@@ -107,14 +107,16 @@ node.default['repose']['rate_limiting']['limit_groups'] = [
   },
   {
     'id' => 'maas-prod',
-    'groups' => 'IP_Super
+    'groups' => 'IP_Super',
     'default' => false,
     'limits' => [
       {
-        'id' => 'unlimited',
+        'id' => 'near-unlimited',
         'uri' => '/version/tenantId/*',
         'uri_regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
-        'http_methods' => 'ALL'
+        'http_methods' => 'ALL',
+        'unit' => 'MINUTE',
+        'value' => 100000
       }
     ]
   }
