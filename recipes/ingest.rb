@@ -26,7 +26,7 @@ file 'var/log/repose/blueflood-ingest.log' do
   mode 0644
 end
 node.default['repose']['appenders'] = ['<RollingFile name="blueflood-ingest" fileName="/var/log/repose/blueflood-ingest.log"
-                     filePattern="/var/log/repose/blueflood-ingest-%d{yyyy-MM-dd_HHmmss}.log">
+                     filePattern="/var/log/repose/blueflood-ingest-%i.log">
             <PatternLayout pattern="%m%n"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1024 MB"/>
