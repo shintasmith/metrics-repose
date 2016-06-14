@@ -1,3 +1,6 @@
+# 0.1.5
+- Add the overlimit_429_responsecode attribute (set to true) so that our rate-limiting filter returns 429 status codes when we rate-limit (and not 413)
+
 # 0.1.4
 - Adjust log4j2 appender and upstart script so that logs don't fill up disk
 
