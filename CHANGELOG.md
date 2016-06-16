@@ -1,3 +1,7 @@
+# 0.1.6
+- Update upstart script to refer to default-java instead of specific version
+- Update customer rate-limit defaults to 2000/MIN for ingest and query (was ingest 1000/MIN and query 1500/MIN)
+
 # 0.1.5
 - Add the overlimit_429_responsecode attribute (set to true) so that our rate-limiting filter returns 429 status codes when we rate-limit (and not 413)
 
