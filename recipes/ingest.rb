@@ -102,7 +102,7 @@ node.default['repose']['rate_limiting']['limit_groups'] = [
         'uri_regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
         'http_methods' => 'ALL',
         'unit' => 'MINUTE',
-        'value' => 1000
+        'value' => 2000
       }
     ]
   },
