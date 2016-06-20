@@ -31,7 +31,7 @@ node.default['repose']['appenders'] = ['<RollingFile name="blueflood-ingest" fil
             <Policies>
                 <SizeBasedTriggeringPolicy size="1024 MB"/>
             </Policies>
-            <DefaultRolloverStrategy max="20"/>
+            <DefaultRolloverStrategy max="6"/>
         </RollingFile>']
 node.default['repose']['loggers'] = ['<Logger name="ingest-repose-http-log" level="info">
             <AppenderRef ref="blueflood-ingest"/>

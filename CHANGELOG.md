@@ -1,3 +1,6 @@
+# 0.1.7
+- Update default number of log files to keep for /var/log/repose/blueflood-<instance>.log, downsize to 6 so we don't cause disk space alerts
+
 # 0.1.6
 - Update upstart script to refer to default-java instead of specific version
 - Update customer rate-limit defaults to 2000/MIN for ingest and query (was ingest 1000/MIN and query 1500/MIN)
