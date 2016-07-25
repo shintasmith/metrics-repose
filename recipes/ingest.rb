@@ -23,7 +23,7 @@ node.default['repose']['peers'] = repose_peers
 file 'var/log/repose/blueflood-ingest.log' do
   user 'root'
   group 'root'
-  mode 0644
+  mode 0o0644
 end
 node.default['repose']['appenders'] = ['<RollingFile name="blueflood-ingest" fileName="/var/log/repose/blueflood-ingest.log"
                      filePattern="/var/log/repose/blueflood-ingest-%i.log">
