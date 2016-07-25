@@ -30,10 +30,10 @@ describe 'repose::filter-keystone-v2' do
   end
 
   it 'keystone-v2 has correct uri' do
-    expect(chef_run).to render_file('/etc/repose/keystone-v2.cfg.xml').with_content(/<identity-service[^<]+uri="https:\/\/identity.api.rackspacecloud.com\/v2.0"\/)
+    expect(chef_run).to render_file('/etc/repose/keystone-v2.cfg.xml').with_content(%r{<identity-service[^<]+uri="https:\/\/identity.api.rackspacecloud.com\/v2.0"})
   end
 
   it 'keystone-v2 has correct tenant-handling' do
-    expect(chef_run).to render_file('/etc/repose/keystone-v2.cfg.xml').with_content(/<tenant-handling >[^<]+<validate-tenant>[^<]+<uri-extraction-regex>\/v2.0\/\(\[\^/\]\+\)\/\.\+<\/uri-extraction-regex>/)
+    expect(chef_run).to render_file('/etc/repose/keystone-v2.cfg.xml').with_content(%r{<tenant-handling >[^<]+<validate-tenant>[^<]+<uri-extraction-regex>\/v2.0\/\(\[\^/\]\+\)\/\.\+<\/uri-extraction-regex>})
   end
 end
