@@ -1,3 +1,6 @@
+# 0.1.8
+- Adding tenanted-url to the keystone-v2 filter
+
 # 0.1.7
 - Update default number of log files to keep for /var/log/repose/blueflood-<instance>.log, downsize to 6 so we don't cause disk space alerts
 
