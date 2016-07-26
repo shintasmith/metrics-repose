@@ -4,12 +4,6 @@ require_relative 'spec_helper'
 describe 'metrics-repose::filter-keystone-v2' do
   before { stub_resources }
 
-  let(:chef_run) { ChefSpec::SoloRunner.new.converge(described_recipe) }
-end
-
-describe 'repose::filter-keystone-v2' do
-  before { stub_resources }
-
   let(:chef_run) do
     ChefSpec::SoloRunner.new do |node|
       node.set['repose']['version']                                    = '7.2.0.0'
@@ -35,5 +29,9 @@ describe 'repose::filter-keystone-v2' do
 
   it 'keystone-v2 has correct tenant-handling' do
     expect(chef_run).to render_file('/etc/repose/keystone-v2.cfg.xml').with_content(%r{<tenant-handling >[^<]+<validate-tenant>[^<]+<uri-extraction-regex>\/v2.0\/\(\[\^/\]\+\)\/\.\+<\/uri-extraction-regex>})
+  end
+
+  it 'keystone-v2 has correct whitelist' do
+    expect(chef_run).to render_file('/etc/repose/keystone-v2.cfg.xml').with_content(%r{<white-list>[^<]+<uri-regex>\/v2.0\/?</uri-regex>})
   end
 end

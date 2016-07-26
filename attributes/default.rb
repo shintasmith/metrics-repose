@@ -72,3 +72,4 @@ default['repose']['keystone_v2']['tenant_handling'] = {
     'url_extraction_regex' => '/v2.0/([^/]+)/.+'
   }
 }
+default['repose']['keystone']['whitelist'] = ['/v2.0/?']
