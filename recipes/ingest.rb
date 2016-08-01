@@ -123,9 +123,9 @@ node.default['repose']['rate_limiting']['limit_groups'] = [
   }
 ]
 
-default['repose']['keystone_v2']['tenant_handling'] = {
+node.default['repose']['keystone_v2']['tenant_handling'] = {
     'validate_tenant' => {
         'url_extraction_regex' => '/v2.0/([^/]+)/.+'
     }
 }
-default['repose']['keystone_v2']['white_list'] = ['/v2.0/?']
+node.default['repose']['keystone_v2']['white_list'] = ['/v2.0/?']
