@@ -1,3 +1,6 @@
+# 0.1.9
+- set additivity to false for blueflood-ingest and blueflood-query http logger, this should stop double logging into /var/log/repose/current.log of http logs
+
 # 0.1.8
 - Adding tenanted-url to the keystone-v2 filter
 

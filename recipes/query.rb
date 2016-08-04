@@ -33,7 +33,7 @@ node.default['repose']['appenders'] = ['<RollingFile name="blueflood-query" file
             </Policies>
             <DefaultRolloverStrategy max="6"/>
         </RollingFile>']
-node.default['repose']['loggers'] = ['<Logger name="query-repose-http-log" level="info">
+node.default['repose']['loggers'] = ['<Logger name="query-repose-http-log" level="info" additivity="false">
             <AppenderRef ref="blueflood-query"/>
         </Logger>']
 
