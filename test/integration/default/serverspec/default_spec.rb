@@ -27,7 +27,7 @@ end
 describe file('/etc/repose/log4j2.xml') do
   it { should be_file }
   it { should be_mode 644 }
-  its(:content) { should match /-repose-http-log\" level\=\"info\" additivity\=\"false\"\>/ }
+  its(:content) { should match(/-repose-http-log\" level\=\"info\" additivity\=\"false\"\>/) }
 end
 
 describe service('repose-valve') do
