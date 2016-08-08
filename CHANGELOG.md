@@ -1,3 +1,6 @@
+# 0.1.10 
+- add perf02 to list of environments for repose data_bag credentials
+
 # 0.1.9
 - set additivity to false for blueflood-ingest and blueflood-query http logger, this should stop double logging into /var/log/repose/current.log of http logs
 

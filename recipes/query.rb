@@ -5,7 +5,7 @@ include_recipe 'repose::install'
 
 cookbook_file '/etc/repose/blueflood-query.wadl'
 
-if %w(stage prod perf01 qe01 qe02).any? { |e| e.include?(node.environment) }
+if %w(stage prod perf01 perf02 qe01 qe02).any? { |e| e.include?(node.environment) }
   credentials = Chef::EncryptedDataBagItem.load('blueflood', "repose_#{node.environment}")
   node.default['repose']['keystone_v2']['username_admin'] = credentials['username']
   node.default['repose']['keystone_v2']['password_admin'] = credentials['password']
