@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application xmlns="http://wadl.dev.java.net/2009/02" xmlns:rax="http://docs.rackspace.com/api"
-    xmlns:wadl="http://wadl.dev.java.net/2009/02" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+             xmlns:wadl="http://wadl.dev.java.net/2009/02" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <resources base="https://global.metrics-ingest.api.rackspacecloud.com/">
         <resource path="v1.0" id="v1version" rax:roles="cloudmetrics:admin">
             <method name="GET" rax:roles="cloudmetrics:observer">
@@ -34,49 +34,41 @@
                 </resource>
             </resource>
         </resource>
-        <resource path="v2.0" id="version" rax:roles="cloudmetrics:admin">
-            <method name="GET" rax:roles="cloudmetrics:observer">
-            </method>
-            <resource path="{tenantId}" rax:roles="cloudmetrics:creator" id="tenantid">
-                <param name="X-Auth-Token" style="header" type="xsd:string" required="true">
-                    <doc>A valid authentication token</doc>
-                </param>
+
+        <resource path="v2.0" id="version">
+
+            <!-- white-listed for loadbalancer -->
+            <method name="GET"/>
+
+            <resource path="{tenantId}" id="tenantid">
                 <param name="tenantId" type="xsd:string" required="true" style="template">
                     <doc>A subscriber to the cloudmetrics service</doc>
                 </param>
-                <resource path="limits" id="limits">
-                    <method name="GET" rax:roles="cloudmetrics:observer"> </method>
+                <resource path="events" id="events">
+
+                    <method name="POST" rax:roles="admin cloudmetrics:admin cloudmetrics:creator identity:user-admin"/>
                 </resource>
+
                 <resource path="ingest" id="ingest">
-                    <method name="POST">
-                    </method>
-                    <resource path="multi" rax:roles="cloudmetrics:service-admin" id="multitenant">
-                        <param name="X-Auth-Token" style="header" type="xsd:string" required="true">
-                            <doc>A valid authentication token</doc>
-                        </param>
-                        <method name="POST">
-                        </method>
-                    </resource>
+
+                    <method name="POST" rax:roles="admin cloudmetrics:admin cloudmetrics:creator identity:user-admin"/>
+
                     <resource path="aggregated" id="aggregated">
-                        <param name="X-Auth-Token" style="header" type="xsd:string" required="true">
-                            <doc>A valid authentication token</doc>
-                        </param>
-                        <method name="POST">
-                        </method>
+
+                        <method name="POST" rax:roles="admin cloudmetrics:admin cloudmetrics:creator identity:user-admin"/>
                         <resource path="multi" id="multitenant-aggregated">
-                            <param name="X-Auth-Token" style="header" type="xsd:string" required="true">
-                                <doc>A valid authentication token</doc>
-                            </param>
-                            <method name="POST">
-                            </method>
+
+                            <method name="POST" rax:roles="cloudmetrics:service-admin"/>
                         </resource>
                     </resource>
-                </resource>
-                <resource path="events" id="events" rax:roles="cloudmetrics:admin">
-                    <method name="POST">
-                    </method>
+
+                    <resource path="multi" id="multitenant">
+
+                        <method name="POST" rax:roles="cloudmetrics:service-admin"/>
+                    </resource>
                 </resource>
             </resource>
         </resource>
     </resources>
 </application>
+
