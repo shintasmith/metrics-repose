@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application xmlns="http://wadl.dev.java.net/2009/02" xmlns:rax="http://docs.rackspace.com/api"
-    xmlns:wadl="http://wadl.dev.java.net/2009/02" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+             xmlns:wadl="http://wadl.dev.java.net/2009/02" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <resources base="https://global.metrics.api.rackspacecloud.com/">
-      <!-- Default identity roles of admin and observer are added because we believe that monitoring sub-users have just got those roles
-           and until we get this sorted out with Identity, they should be given access to our query endpoint -->
+        <!-- Default identity roles of admin and observer are added because we believe that monitoring sub-users have just got those roles
+             and until we get this sorted out with Identity, they should be given access to our query endpoint -->
         <resource path="v1.0" id="v1version" rax:roles="monitoring:admin identity:user-admin admin">
             <method name="GET">
             </method>
@@ -35,22 +35,16 @@
                 </resource>
             </resource>
         </resource>
-        <resource path="v2.0" id="version" rax:roles="monitoring:admin identity:user-admin admin cloudmetrics:service-admin cloudmetrics:creator">
-            <method name="GET" rax:roles="cloudmetrics:observer">
-            </method>
-            <resource path="{tenantId}" rax:roles="cloudmetrics:observer monitoring:observer observer monitoring:creator" id="tenantid">
-                <param name="X-Auth-Token" style="header" type="xsd:string" required="true">
-                    <doc>A valid authentication token</doc>
-                </param>
+
+        <resource path="v2.0" id="version">
+            <!-- white-listed for loadbalancer -->
+            <method name="GET"/>
+
+            <resource path="{tenantId}" id="tenantid">
                 <param name="tenantId" type="xsd:string" required="true" style="template">
                     <doc>A subscriber to the cloudmetrics service</doc>
                 </param>
-                <resource path="limits" id="limits">
-                    <method name="GET" rax:roles="cloudmetrics:observer"> </method>
-                </resource>
                 <resource path="views" id="metrics_view">
-                    <method name="POST">
-                    </method>
                     <resource path="{metric_name}" id="metric_name">
                         <param name="metric_name" type="xsd:string" required="true" style="template">
                             <doc>metric name</doc>
@@ -63,7 +57,7 @@
                         </param>
                         <param name="resolution" style="query" type="xsd:string" required="false">
                             <wadl:doc xmlns="http//docbook.org/ns/docbook">
-                                Specifies the granularity of data to query. 
+                                Specifies the granularity of data to query.
                                 One of points or resolution parameter must be specified.
                             </wadl:doc>
                             <option value="FULL"/>
@@ -85,30 +79,33 @@
                         </param>
                         <param name="select" style="query" type="xsd:string" required="false">
                             <wadl:doc xmlns="http//docbook.org/ns/docbook">
-                                Specifies the type of statistics to return. 
+                                Specifies the type of statistics to return.
                             </wadl:doc>
                             <option value="average"/>
                             <option value="variance"/>
                             <option value="min"/>
                             <option value="max"/>
                         </param>
-                        <method name="GET">
-                        </method>
+<!--
+               TODO:  CMD-1280: monitoring:admin & monitoring:observer should not have access, but were already included here.  We'll need to eventually remove them from this and the
+              rest of the calls.
+
+              TODO:  cloudmetrics:service-admin access still needs to be defined for query.  This is just supporting existing functionality. Story is TBD as its still being defined.
+-->
+                        <method name="GET" rax:roles="admin cloudmetrics:admin cloudmetrics:creator cloudmetrics:observer identity:user-admin observer monitoring:admin monitoring:observer cloudmetrics:service-admin"/>
+                        <method name="OPTIONS" rax:roles="admin cloudmetrics:admin cloudmetrics:creator cloudmetrics:observer identity:user-admin observer monitoring:admin monitoring:observer cloudmetrics:service-admin"/>
                     </resource>
+
+                    <method name="OPTIONS" rax:roles="admin cloudmetrics:admin cloudmetrics:creator cloudmetrics:observer identity:user-admin observer monitoring:admin monitoring:observer cloudmetrics:service-admin"/>
+                    <method name="POST" rax:roles="admin cloudmetrics:admin cloudmetrics:creator cloudmetrics:observer identity:user-admin observer monitoring:admin monitoring:observer cloudmetrics:service-admin"/>
                 </resource>
-                <resource path="metrics">
-                    <resource path="search">
-                        <method name="GET">
-                        </method>
-                    </resource>
+                <resource path="metrics/search">
+                    <method name="GET" rax:roles="admin cloudmetrics:admin cloudmetrics:creator cloudmetrics:observer identity:user-admin observer monitoring:admin monitoring:observer cloudmetrics:service-admin"/>
+                    <method name="OPTIONS" rax:roles="admin cloudmetrics:admin cloudmetrics:creator cloudmetrics:observer identity:user-admin observer monitoring:admin monitoring:observer cloudmetrics:service-admin"/>
                 </resource>
-                <resource path="events">
-                    <resource path="getEvents">
-                        <method name="GET">
-                        </method>
-                        <method name="OPTIONS">
-                        </method>
-                    </resource>
+                <resource path="events/getEvents">
+                    <method name="GET" rax:roles="admin cloudmetrics:admin cloudmetrics:creator cloudmetrics:observer identity:user-admin observer monitoring:admin monitoring:observer cloudmetrics:service-admin"/>
+                    <method name="OPTIONS" rax:roles="admin cloudmetrics:admin cloudmetrics:creator cloudmetrics:observer identity:user-admin observer monitoring:admin monitoring:observer cloudmetrics:service-admin"/>
                 </resource>
                 <resource path="metric_name/search">
                     <param name="query" type="xsd:string" required="true" style="template">
@@ -120,11 +117,8 @@
                             To get all metric names with app as its first node.
                         </doc>
                     </param>
-                    <method name="GET">
-                        <doc>
-                            Retrieves a list of available metric names.
-                        </doc>
-                    </method>
+                    <method name="GET" rax:roles="admin cloudmetrics:admin cloudmetrics:creator cloudmetrics:observer identity:user-admin observer monitoring:admin monitoring:observer cloudmetrics:service-admin"/>
+                    <method name="OPTIONS" rax:roles="admin cloudmetrics:admin cloudmetrics:creator cloudmetrics:observer identity:user-admin observer monitoring:admin monitoring:observer cloudmetrics:service-admin"/>
                 </resource>
             </resource>
         </resource>
