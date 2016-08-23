@@ -92,7 +92,7 @@ node.default['repose']['rate_limiting']['global_limits'] = [
     'id' => 'global',
     'uri' => '*',
     'uri-regex' => '.*',
-    'value' => 10_000,
+    'value' => 1000,
     'http-methods' => 'ALL',
     'unit' => 'MINUTE'
   }
@@ -107,6 +107,21 @@ node.default['repose']['rate_limiting']['limit_groups'] = [
         'id' => 'version-tenantId',
         'uri' => '/version/tenantId/*',
         'uri_regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
+        'http_methods' => 'ALL',
+        'unit' => 'MINUTE',
+        'value' => 1000
+      }
+    ]
+  },
+  {
+    'id' => 'lbaas-prod',
+    'groups' => 'IP_Super',
+    'default' => false,
+    'limits' => [
+      {
+        'id' => 'near-unlimited',
+        'uri' => '/version/tenantId/*',
+        'uri_regex' => '/v[0-9.]+/959877/.+',
         'http_methods' => 'ALL',
         'unit' => 'MINUTE',
         'value' => 2000
