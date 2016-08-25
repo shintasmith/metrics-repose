@@ -85,7 +85,7 @@ node.default['repose']['rate_limiting']['global_limits'] = [
     'id' => 'global',
     'uri' => '*',
     'uri-regex' => '.*',
-    'value' => 100_000,
+    'value' => 3000,
     'http-methods' => 'ALL',
     'unit' => 'MINUTE'
   }
@@ -102,7 +102,7 @@ node.default['repose']['rate_limiting']['limit_groups'] = [
         'uri_regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
         'http_methods' => 'ALL',
         'unit' => 'MINUTE',
-        'value' => 2000
+        'value' => 3000
       }
     ]
   },
@@ -114,10 +114,10 @@ node.default['repose']['rate_limiting']['limit_groups'] = [
       {
         'id' => 'near-unlimited',
         'uri' => '/version/tenantId/*',
-        'uri_regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
+        'uri_regex' => '/v[0-9.]+/706456/.+',
         'http_methods' => 'ALL',
         'unit' => 'MINUTE',
-        'value' => 100_000
+        'value' => 20_000
       }
     ]
   }
