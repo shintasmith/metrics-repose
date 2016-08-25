@@ -1,3 +1,10 @@
+# 0.1.12
+- Tweak rate limit values in repose for ingest and query nodes.
+- Set special ingest rate limit for maas-prod tenant, and special query rate limit for lbaas-prod tenant.
+
+# 0.1.11
+- Updating wadls to match the correct RBAC roles.  Enabling rax:roles for validation.
+
 # 0.1.10 
 - add perf02 to list of environments for repose data_bag credentials
 
