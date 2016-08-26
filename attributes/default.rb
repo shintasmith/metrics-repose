@@ -62,17 +62,17 @@ default['repose']['header_normalization']['blacklist'] = [{
 }]
 
 default['repose']['add_header']['requests'] = [{
-    name:      'content-type',
-    quality:   '1',
-    overwrite: 'false',
-    value:     'application/json'
+  name:      'content-type',
+  quality:   '1',
+  overwrite: 'false',
+  value:     'application/json'
 }]
 
 default['repose']['add_header']['responses'] = [{
-    name:      'content-type',
-    quality:   '1',
-    overwrite: 'false',
-    value:     'application/json'
+  name:      'content-type',
+  quality:   '1',
+  overwrite: 'false',
+  value:     'application/json'
 }]
 
 default['repose']['ip_user']['cluster_id'] = ['all']
