@@ -62,5 +62,13 @@ To release a new version of this cookbook, do the following:
 
 Then you probably want to update some Berksfiles :smile:
 
+## Building and Testing
+
+### Requirements
+1. Vagrant
+Download it from: https://www.vagrantup.com/downloads.html
+2. Virtual Box
+Download it from: https://www.virtualbox.org/wiki/Downloads
+
 ## Kitchen and Travis
 You can run 'kitchen test' or 'kitchen converge [ingest|query]' to test the cookbook.  This cookbook will run some lint checking on TravisCI when pushed to github.
