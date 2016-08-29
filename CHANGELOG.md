@@ -1,3 +1,6 @@
+# 0.1.13
+- Add the add-header filter to inject Content-Type header if it's not present
+
 # 0.1.12
 - Tweak rate limit values in repose for ingest and query nodes.
 - Set special ingest rate limit for maas-prod tenant, and special query rate limit for lbaas-prod tenant.
