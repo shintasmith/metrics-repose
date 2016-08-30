@@ -17,6 +17,7 @@ default['repose']['slf4j_http_logging']['format'] = '<![CDATA[
 default['repose']['filters'] = %w(
   slf4j-http-logging
   header-normalization
+  add-header
   keystone-v2
   ip-identity
   rate-limiting
@@ -58,6 +59,20 @@ default['repose']['header_normalization']['blacklist'] = [{
     X-Subject-Name
     X-Subject-ID
   )
+}]
+
+default['repose']['add_header']['requests'] = [{
+  name:      'content-type',
+  quality:   '1',
+  overwrite: 'false',
+  value:     'application/json'
+}]
+
+default['repose']['add_header']['responses'] = [{
+  name:      'content-type',
+  quality:   '1',
+  overwrite: 'false',
+  value:     'application/json'
 }]
 
 default['repose']['ip_user']['cluster_id'] = ['all']
