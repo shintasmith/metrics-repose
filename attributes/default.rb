@@ -61,6 +61,7 @@ default['repose']['header_normalization']['blacklist'] = [{
   )
 }]
 
+default['repose']['add_header']['cluster_id'] = ['all']
 default['repose']['add_header']['requests'] = [{
   name:      'content-type',
   quality:   '1',
