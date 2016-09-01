@@ -1,3 +1,6 @@
+# 0.1.14
+- Fix rate limit values set incorrectly in 0.1.12
+
 # 0.1.13
 - Add the add-header filter to inject Content-Type header if it's not present
 
