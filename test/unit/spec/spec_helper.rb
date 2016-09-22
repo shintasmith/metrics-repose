@@ -4,7 +4,7 @@
 
 require 'rspec/expectations'
 require 'chefspec'
-require 'berkshelf'
+require 'chefspec/berkshelf'
 require 'chef/application'
 
 ::LOG_LEVEL = :fatal
