@@ -20,7 +20,7 @@ node['blueflood']['query_servers'].each do |server|
 end
 node.default['repose']['peers'] = repose_peers
 
-file 'var/log/repose/blueflood-query.log' do
+file '/var/log/repose/blueflood-query.log' do
   user 'root'
   group 'root'
   mode 0o0644
