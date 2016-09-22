@@ -25,7 +25,7 @@ describe 'metrics-repose' do
   it 'starts a service called repose-valve' do
     expect(chef_run).to start_service('repose-valve')
   end
- 
+
   it 'creates a template /etc/repose/metrics.cfg.xml' do
     expect(chef_run).to create_template('/etc/repose/metrics.cfg.xml')
   end

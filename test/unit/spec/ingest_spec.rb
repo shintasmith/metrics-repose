@@ -9,7 +9,6 @@ describe 'metrics-repose::ingest' do
     end.converge(described_recipe)
   end
 
-
   it 'include recipe repose::install' do
     expect(chef_run).to include_recipe('repose::install')
   end
