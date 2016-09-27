@@ -16,7 +16,8 @@ suites:
     "recipe[repose::filter-slf4j-http-logging]",
     "recipe[repose::filter-header-normalization]",
     "recipe[repose::filter-keystone-v2]",
-    "recipe[repose::filter-ip-user]",
+    "recipe[repose::filter-add-header]",
+    "recipe[repose::filter-ip-identity]",
     "recipe[repose::filter-rate-limiting]",
     "recipe[repose::filter-api-validator]"
   ]
@@ -33,7 +34,8 @@ suites:
     "recipe[repose::filter-slf4j-http-logging]",
     "recipe[repose::filter-header-normalization]",
     "recipe[repose::filter-keystone-v2]",
-    "recipe[repose::filter-ip-user]",
+    "recipe[repose::filter-add-header]",
+    "recipe[repose::filter-ip-identity]",
     "recipe[repose::filter-rate-limiting]",
     "recipe[repose::filter-api-validator]"
   ]
