@@ -1,18 +1,33 @@
+# encoding: UTF-8
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
 source 'https://rubygems.org'
+
+gem 'berkshelf'
+gem 'rake'
+gem 'chef'
+gem 'chef-sugar'
 
 group :style do
   gem 'foodcritic'
   gem 'rubocop'
+end
+
+group :spec do
+  gem 'chefspec'
   gem 'rubocop-rspec'
 end
 
-group :unit do
-  gem 'berkshelf', '~> 4'
-  gem 'chefspec', '~> 4'
-  gem 'chef-sugar'
+group :integration do
+  gem 'test-kitchen', '~> 1.4.1'
 end
 
-group :integration do
-  gem 'test-kitchen', '~> 1.4.0'
+group :vagrant do
   gem 'kitchen-vagrant'
+  gem 'vagrant-wrapper'
+end
+
+group :integration_docker do
+  gem 'kitchen-docker', '~> 2.3'
 end
