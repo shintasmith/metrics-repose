@@ -4,21 +4,43 @@
 
 require_relative 'spec_helper'
 
-describe file('/etc/sysconfig/repose') do
+describe file('/etc/repose') do
+  it { should be_directory }
+  it { should be_mode 755 }
+end
+
+describe file('/etc/repose/slf4j-http-logging.cfg.xml') do
   it { should be_file }
   it { should be_mode 644 }
 end
-
-describe file('/etc/repose/system-model.cfg.xml') do
-  it { should be_file }
-  it { should be_mode 644 }
-end
-
 describe file('/etc/repose/container.cfg.xml') do
   it { should be_file }
   it { should be_mode 644 }
 end
-
+describe file('/etc/repose/dist-datastore.cfg.xml') do
+  it { should be_file }
+  it { should be_mode 644 }
+end
+describe file('/etc/repose/http-connection-pool.cfg.xml') do
+  it { should be_file }
+  it { should be_mode 644 }
+end
+describe file('/etc/repose/ip-identity.cfg.xml') do
+  it { should be_file }
+  it { should be_mode 644 }
+end
+describe file('/etc/keystone-v2.cfg.xml') do
+  it { should be_file }
+  it { should be_mode 644 }
+end
+describe file('/etc/validator.cfg.xml') do
+  it { should be_file }
+  it { should be_mode 644 }
+end
+describe file('/etc/rate-limiting.cfg.xml') do
+  it { should be_file }
+  it { should be_mode 644 }
+end
 describe file('/etc/repose/system-model.cfg.xml') do
   it { should be_file }
   it { should be_mode 644 }
@@ -32,4 +54,5 @@ end
 
 describe service('repose-valve') do
   it { should be_enabled }
+  it { should be_started }
 end
