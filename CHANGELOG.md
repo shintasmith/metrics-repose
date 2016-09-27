@@ -1,3 +1,6 @@
+# 0.1.16
+- Add tenant handling to repose keystone_v2.cfg.xml to require tenant auth for query nodes and tenanted metrics.
+
 # 0.1.15
 - Fix rate limit values set incorrectly in 0.1.12
 

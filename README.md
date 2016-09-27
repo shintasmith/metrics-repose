@@ -70,5 +70,32 @@ Download it from: https://www.vagrantup.com/downloads.html
 2. Virtual Box
 Download it from: https://www.virtualbox.org/wiki/Downloads
 
+Optionally for OSX, you can use homebrew install to vagrant and virtualbox together. 
+
+- http://brew.sh/index.html
+- http://sourabhbajaj.com/mac-setup/Vagrant/README.html
+
+```
+brew cask install virtualbox
+brew cask install vagrant
+```
+
 ## Kitchen and Travis
 You can run 'kitchen test' or 'kitchen converge [ingest|query]' to test the cookbook.  This cookbook will run some lint checking on TravisCI when pushed to github.
+
+```
+# useful kitchen commands
+kitchen create 		# builds the basic VM
+kitchen converge 	# tests chef convergence
+kitchen verify 		# runs integration tests
+kitchen destroy 	# clean everything up
+kitchen test 		# basically runs through those 4 steps above) - but does a destroy at the end
+kitchen login 		# will log you into the VM in any of the first 4 steps
+
+# useful vagrant commands
+vagrant global-status 			# list VMs info and states
+vagrant ssh <machine_id> 		# ssh to the vm
+vagrant ssh <machine_id> -c "sudo cat /some_file" > some_file # cat a file on the vm to a local file
+vagrant halt <machine_id> 		# stop the vm
+vagrant destroy <machine_id> 	# destroy the vm, but you should preferably use `kitchen destroy` if possible
+```
