@@ -9,7 +9,7 @@ require 'chef/application'
 
 ::UBUNTU_OPTS = {
   platform: 'ubuntu',
-  version: '14.04',
+  version: '14.04'
 }.freeze
 
 def stub_resources
