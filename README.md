@@ -80,7 +80,13 @@ brew cask install virtualbox
 brew cask install vagrant
 ```
 
-## Kitchen and Travis
+### Unit tests
+These can be run using the command $ chef exec rspec test/unit  
+or with the Rake task $ rake unit
+
+Unit tests will automatically be run in TravisCI on PRs and branch uploads.
+
+### Kitchen and Travis
 You can run 'kitchen test' or 'kitchen converge [ingest|query]' to test the cookbook.  This cookbook will run some lint checking on TravisCI when pushed to github.
 
 ```
