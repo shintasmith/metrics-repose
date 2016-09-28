@@ -4,7 +4,7 @@ require_relative 'spec_helper'
 describe 'metrics-repose::ingest' do
   before { stub_resources }
   let(:chef_run) do
-    ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '14.04') do |node|
+    ChefSpec::SoloRunner.new(UBUNTU_OPTS) do |node|
       node.default['blueflood']['ingest_servers'] = ['127.0.0.1']
     end.converge(described_recipe)
   end
