@@ -4,6 +4,7 @@ driver:
 
 provisioner:
   name: chef_zero
+  chef_omnibus_install_options: -d /tmp/vagrant-cache/vagrant_omnibus
 
 platforms:
   - name: ubuntu-14.04
@@ -51,7 +52,7 @@ suites:
   ]
   attributes:
     blueflood:
-      ingest_servers: ["127.0.0.3", "127.0.0.4"]
+      ingest_servers: ["127.0.0.1", "127.0.0.2"]
       ingest:
         container_port: "9011"
     graphite_ip: "127.0.0.1"
