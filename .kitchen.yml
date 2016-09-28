@@ -11,6 +11,7 @@ platforms:
 suites:
 - name: query
   run_list: [
+    "recipe[java::default]",
     "recipe[metrics-repose::query]",
     "recipe[metrics-repose::default]",
     "recipe[repose::filter-slf4j-http-logging]",
@@ -27,8 +28,17 @@ suites:
       query:
         container_port: "9001"
     graphite_ip: "127.0.0.1"
+    java:
+      java_home: "/usr/lib/jvm/java-8-oracle-amd64"
+      jdk_version: 8
+      install_flavor: "oracle"
+      accept_license_agreement: true
+      oracle:
+        accept_oracle_download_terms: true
+
 - name: ingest
   run_list: [
+    "recipe[java::default]",
     "recipe[metrics-repose::ingest]",
     "recipe[metrics-repose::default]",
     "recipe[repose::filter-slf4j-http-logging]",
@@ -45,3 +55,10 @@ suites:
       ingest:
         container_port: "9011"
     graphite_ip: "127.0.0.1"
+    java:
+      java_home: "/usr/lib/jvm/java-8-oracle-amd64"
+      jdk_version: 8
+      install_flavor: "oracle"
+      accept_license_agreement: true
+      oracle:
+        accept_oracle_download_terms: true
