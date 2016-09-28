@@ -22,12 +22,6 @@ link '/etc/init.d/repose-valve' do
   to '/lib/init/upstart-job'
 end
 
-service 'repose-valve' do
-  supports restart: true, status: true
-  action [:enable, :start]
-  provider Chef::Provider::Service::Upstart
-end
-
 template '/etc/repose/metrics.cfg.xml' do
   source 'metrics.cfg.xml.erb'
   owner 'root'
@@ -38,12 +32,6 @@ end
 unless node['repose']['cluster_id'].nil?
   log "Please note that node['repose']['cluster_id'] is deprecated. We've set node['repose']['cluster_ids'] to [#{node['repose']['cluster_id']}] in an effort to maintain compatibility with earlier versions. This functionality will be removed in a future version."
   node.normal['repose']['cluster_ids'] = [node['repose']['cluster_id']]
-end
-
-directory node['repose']['config_directory'] do
-  owner node['repose']['owner']
-  group node['repose']['group']
-  mode '0755'
 end
 
 services = node['repose']['services'].reject { |x| x == 'http-connection-pool' || x == 'response-messaging' }

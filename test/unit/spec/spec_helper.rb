@@ -4,17 +4,12 @@
 
 require 'rspec/expectations'
 require 'chefspec'
-require 'berkshelf'
+require 'chefspec/berkshelf'
 require 'chef/application'
 
-::LOG_LEVEL = :fatal
 ::UBUNTU_OPTS = {
   platform: 'ubuntu',
-  version: '14.04',
-  log_level: ::LOG_LEVEL
-}.freeze
-::CHEFSPEC_OPTS = {
-  log_level: ::LOG_LEVEL
+  version: '14.04'
 }.freeze
 
 def stub_resources
