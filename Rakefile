@@ -22,21 +22,27 @@ task :unit do
 end
 
 desc 'Run Test Kitchen integration tests'
-task :integration do
-  require 'kitchen'
-  Kitchen.logger = Kitchen.default_file_logger
-  Kitchen::Config.new.instances.each do |instance|
-    instance.test(:always)
+namespace :integration do
+  desc 'Run integration tests with kitchen-vagrant'
+  task :vagrant do
+    require 'kitchen'
+    Kitchen.logger = Kitchen.default_file_logger
+    Kitchen::Config.new.instances.each { |instance| instance.test(:always) }
+  end
+
+  desc 'Run integration tests with kitchen-docker'
+  task :docker, [:instance] do |_t, args|
+    args.with_defaults(instance: 'default-ubuntu-1404')
+    require 'kitchen'
+    Kitchen.logger = Kitchen.default_file_logger
+    loader = Kitchen::Loader::YAML.new(local_config: '.kitchen.docker.yml')
+    instances = Kitchen::Config.new(loader: loader).instances
+    # Travis CI Docker service does not support destroy:
+    instances.get(args.instance).verify
   end
 end
 
 desc 'Run all tests'
 task test: %w(style unit integration)
-
-desc 'Tasks to run on Travis CI'
-namespace :travis do
-  desc 'Run tests on Travis'
-  task ci: %w(style)
-end
 
 task default: %w(style unit integration)

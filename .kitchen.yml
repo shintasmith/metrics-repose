@@ -4,6 +4,7 @@ driver:
 
 provisioner:
   name: chef_zero
+  chef_omnibus_install_options: -d /tmp/vagrant-cache/vagrant_omnibus
 
 platforms:
   - name: ubuntu-14.04
@@ -11,6 +12,7 @@ platforms:
 suites:
 - name: query
   run_list: [
+    "recipe[java::default]",
     "recipe[metrics-repose::query]",
     "recipe[metrics-repose::default]",
     "recipe[repose::filter-slf4j-http-logging]",
@@ -27,8 +29,17 @@ suites:
       query:
         container_port: "9001"
     graphite_ip: "127.0.0.1"
+    java:
+      java_home: "/usr/lib/jvm/java-8-oracle-amd64"
+      jdk_version: 8
+      install_flavor: "oracle"
+      accept_license_agreement: true
+      oracle:
+        accept_oracle_download_terms: true
+
 - name: ingest
   run_list: [
+    "recipe[java::default]",
     "recipe[metrics-repose::ingest]",
     "recipe[metrics-repose::default]",
     "recipe[repose::filter-slf4j-http-logging]",
@@ -41,7 +52,14 @@ suites:
   ]
   attributes:
     blueflood:
-      ingest_servers: ["127.0.0.3", "127.0.0.4"]
+      ingest_servers: ["127.0.0.1", "127.0.0.2"]
       ingest:
         container_port: "9011"
     graphite_ip: "127.0.0.1"
+    java:
+      java_home: "/usr/lib/jvm/java-8-oracle-amd64"
+      jdk_version: 8
+      install_flavor: "oracle"
+      accept_license_agreement: true
+      oracle:
+        accept_oracle_download_terms: true
