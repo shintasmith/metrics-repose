@@ -6,6 +6,19 @@ console none
 respawn
 respawn limit 5 60
 
+<% if node['repose']['upstart']['pre-stop'] != nil %>
+pre-stop script
+<%= node['repose']['upstart']['pre-stop'] %>
+end script
+<% end %>
+
+<% if node['repose']['upstart']['post-start'] != nil %>
+post-start script
+<%= node['repose']['upstart']['post-start'] %>
+end script
+<% end %>
+
+
 script
     export JAVA_HOME=/usr/lib/jvm/default-java
     export JAVA_BIN=${JAVA_HOME}/bin/java
