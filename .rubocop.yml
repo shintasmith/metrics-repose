@@ -2,9 +2,10 @@ inherit_from: .rubocop_todo.yml
 
 Metrics/LineLength:
   Enabled: false
+Metrics/BlockLength:
+  Enabled: false
 
 Style/FileName:
   Enabled: false
-
 Style/NumericLiterals:
   MinDigits: 6
