@@ -1,3 +1,6 @@
+# 0.1.17
+- Adding pre-stop and post-start upstart blocks
+	
 # 0.1.16
 - Add tenant handling to repose keystone_v2.cfg.xml to require tenant auth for query nodes and tenanted metrics.
 
