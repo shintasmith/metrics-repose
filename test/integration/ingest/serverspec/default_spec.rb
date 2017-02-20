@@ -70,7 +70,7 @@ end
 
 describe file('/etc/repose/keystone-v2.cfg.xml') do
   it { should be_file }
-  it { should be_mode 644 }
+  it { should be_mode 640 }
   its(:content) { should match %r{uri="https://identity.api.rackspacecloud.com"} }
 end
 

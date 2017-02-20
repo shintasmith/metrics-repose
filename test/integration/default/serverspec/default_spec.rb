@@ -31,7 +31,7 @@ describe file('/etc/repose/ip-identity.cfg.xml') do
 end
 describe file('/etc/keystone-v2.cfg.xml') do
   it { should be_file }
-  it { should be_mode 644 }
+  it { should be_mode 640 }
 end
 describe file('/etc/validator.cfg.xml') do
   it { should be_file }
