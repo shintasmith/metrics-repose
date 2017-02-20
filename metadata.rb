@@ -4,7 +4,7 @@ maintainer_email 'sfo-devops@lists.rackspace.com'
 license 'Apache 2.0'
 description 'Installs/Configures metrics-repose'
 long_description 'Installs/Configures repose and Rackspace Metrics configuration for repose'
-version '0.1.17'
+version '0.1.18'
 
 if respond_to?(:source_url)
   source_url 'https://github.com/mmi-cookbooks/metrics-repose'

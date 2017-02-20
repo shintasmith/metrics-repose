@@ -12,7 +12,6 @@ require 'chef/application'
   version: '14.04'
 }.freeze
 
-def stub_resources
-end
+def stub_resources; end
 
 at_exit { ChefSpec::Coverage.report! }
