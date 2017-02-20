@@ -1,3 +1,6 @@
+# 0.1.18
+- Change Repose http-conn-pool max to 400
+
 # 0.1.17
 - Adding pre-stop and post-start upstart blocks
 	

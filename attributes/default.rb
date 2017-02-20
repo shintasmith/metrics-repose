@@ -31,8 +31,8 @@ default['repose']['services'] = %w(
 default['repose']['http_connection_pool']['chunked_encoding'] = false
 default['repose']['http_connection_pool']['socket_timeout'] = 600_000 # in millis
 default['repose']['http_connection_pool']['connection_timeout'] = 30_000 # in millis
-default['repose']['http_connection_pool']['max_total'] = 16000
-default['repose']['http_connection_pool']['max_per_route'] = 16000
+default['repose']['http_connection_pool']['max_total'] = 400
+default['repose']['http_connection_pool']['max_per_route'] = 400
 
 default['repose']['header_normalization']['cluster_id'] = ['all']
 default['repose']['header_normalization']['uri_regex'] = nil
