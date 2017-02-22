@@ -104,6 +104,14 @@ node.default['repose']['rate_limiting']['limit_groups'] = [
     'default' => true,
     'limits' => [
       {
+        'id' => 'ge-special',
+        'uri' => '/version/hybrid:2830618/*',
+        'uri_regex' => '/v[0-9.]+/(hybrid:2830618)/.+',
+        'http_methods' => 'ALL',
+        'unit' => 'MINUTE',
+        'value' => 4000
+      },
+      {
         'id' => 'version-tenantId',
         'uri' => '/version/tenantId/*',
         'uri_regex' => '/v[0-9.]+/((hybrid:)?[0-9]+)/.+',
