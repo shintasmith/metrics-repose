@@ -1,3 +1,6 @@
+# 0.1.19
+- Add GE special rate limit
+
 # 0.1.18
 - Change Repose http-conn-pool max to 400
 
