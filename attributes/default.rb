@@ -81,6 +81,8 @@ default['repose']['ip_user']['cluster_id'] = ['all']
 default['repose']['ip_identity']['cluster_id'] = ['all']
 default['repose']['ip_identity']['quality'] = 0.2
 default['repose']['ip_identity']['white_list_quality'] = 1.0
+default['repose']['ingest']['ip_identity']['white_list_ip_addresses'] = ['127.0.0.1']
+default['repose']['query']['ip_identity']['white_list_ip_addresses'] = ['127.0.0.1']
 
 default['repose']['upstart']['pre-stop'] = nil
 default['repose']['upstart']['post-start'] = nil
