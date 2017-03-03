@@ -1,3 +1,6 @@
+# 0.1.20
+- fix ip_identity white_list_ip_addresses to allow for different ingest and query settings and be overridden in environments
+
 # 0.1.19
 - Add GE special rate limit
 
