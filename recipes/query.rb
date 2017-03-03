@@ -129,3 +129,4 @@ node.default['repose']['keystone_v2']['tenant_handling'] = {
   }
 }
 node.default['repose']['keystone_v2']['white_list'] = ['/v2.0/?']
+node.default['repose']['ip_identity']['white_list_ip_addresses'] = node['repose']['query']['ip_identity']['white_list_ip_addresses']
