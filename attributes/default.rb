@@ -16,6 +16,8 @@ default['repose']['slf4j_http_logging']['format'] = '<![CDATA[
 
 default['repose']['filters'] = %w(
   slf4j-http-logging
+  merge-header
+  cors
   header-normalization
   add-header
   keystone-v2
@@ -33,6 +35,12 @@ default['repose']['http_connection_pool']['socket_timeout'] = 600_000 # in milli
 default['repose']['http_connection_pool']['connection_timeout'] = 30_000 # in millis
 default['repose']['http_connection_pool']['max_total'] = 400
 default['repose']['http_connection_pool']['max_per_route'] = 400
+
+default['repose']['merge_header']['cluster_id'] = ['all']
+default['repose']['merge_header']['response_headers'] = ['Access-Control-Allow-Methods','Vary']
+
+default['repose']['cors']['cluster_id'] = ['all']
+default['repose']['cors']['allowed_methods'] = ['GET','POST']
 
 default['repose']['header_normalization']['cluster_id'] = ['all']
 default['repose']['header_normalization']['uri_regex'] = nil

@@ -52,6 +52,8 @@ node.default['repose']['endpoints'] = [{
 
 # NOTE these hash keys should be left as strings or system-model.cfg.xml.erb will break
 filter_cluster_map = {
+  'merge-header'           => node['repose']['merge_header']['cluster_id'],
+  'cors'                   => node['repose']['cors']['cluster_id'],
   'header-normalization'   => node['repose']['header_normalization']['cluster_id'],
   'add-header'             => node['repose']['add_header']['cluster_id'],
   'slf4j-http-logging'     => node['repose']['slf4j_http_logging']['cluster_id'],
@@ -62,6 +64,8 @@ filter_cluster_map = {
 }
 
 filter_uri_regex_map = {
+  'merge-header'           => node['repose']['merge_header']['uri_regex'],
+  'cors'                   => node['repose']['cors']['uri_regex'],
   'header-normalization'   => node['repose']['header_normalization']['uri_regex'],
   'add-header'             => node['repose']['add_header']['uri_regex'],
   'slf4j-http-logging'     => node['repose']['slf4j_http_logging']['uri_regex'],
