@@ -5,7 +5,7 @@
 source 'https://rubygems.org'
 
 gem 'berkshelf'
-gem 'chef'
+gem 'chef', '~> 12.8.1'
 gem 'chef-sugar'
 gem 'rake'
 
@@ -25,6 +25,7 @@ end
 
 group :vagrant do
   gem 'kitchen-vagrant'
+  gem 'vagrant-cachier'
   gem 'vagrant-wrapper'
 end
 
