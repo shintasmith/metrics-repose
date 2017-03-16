@@ -1,6 +1,7 @@
 ---
 driver: 
   name: vagrant
+  cachier: true
 
 provisioner:
   name: chef_zero
@@ -12,7 +13,8 @@ platforms:
 suites:
 - name: query
   run_list: [
-    "recipe[java::default]",
+    "recipe[apt]",
+    "recipe[java]",
     "recipe[metrics-repose::query]",
     "recipe[metrics-repose::default]",
     "recipe[repose::filter-slf4j-http-logging]",
@@ -39,8 +41,8 @@ suites:
 
 - name: ingest
   run_list: [
-    "recipe[java::default]",
-    "recipe[metrics-repose::ingest]",
+    "recipe[apt]",
+    "recipe[java]",
     "recipe[metrics-repose::default]",
     "recipe[repose::filter-slf4j-http-logging]",
     "recipe[repose::filter-header-normalization]",
