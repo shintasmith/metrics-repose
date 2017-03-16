@@ -17,6 +17,28 @@ describe file('/etc/repose/slf4j-http-logging.cfg.xml') do
   end
 end
 
+describe file('/etc/repose/merge-header.cfg.xml') do
+  it { should be_file }
+  it { should be_mode 644 }
+  its(:content) do
+    should match %r{    <response>
+        <header>Access-Control-Allow-Methods</header>
+        <header>Vary</header>
+    </response>}
+  end
+end
+
+describe file('/etc/repose/cors.cfg.xml') do
+  it { should be_file }
+  it { should be_mode 644 }
+  its(:content) do
+    should match %r{    <allowed-methods>
+        <method>GET</method>
+        <method>POST</method>
+    </allowed-methods>}
+  end
+end
+
 describe file('/etc/repose/header-normalization.cfg.xml') do
   it { should be_file }
   it { should be_mode 644 }
@@ -117,6 +139,8 @@ describe file('/etc/repose/system-model.cfg.xml') do
   its(:content) do
     should match %r{
             <filter name="slf4j-http-logging" />
+            <filter name="merge-header" />
+            <filter name="cors" />
             <filter name="header-normalization" />
             <filter name="add-header" />
             <filter name="keystone-v2" />
