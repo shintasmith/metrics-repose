@@ -45,6 +45,7 @@ suites:
   run_list: [
     "recipe[apt]",
     "recipe[java]",
+    "recipe[metrics-repose::ingest]",
     "recipe[metrics-repose::default]",
     "recipe[repose::filter-slf4j-http-logging]",
     "recipe[repose::filter-merge-header]",
