@@ -37,7 +37,7 @@ default['repose']['http_connection_pool']['max_total'] = 400
 default['repose']['http_connection_pool']['max_per_route'] = 400
 
 default['repose']['merge_header']['cluster_id'] = ['all']
-default['repose']['merge_header']['response_headers'] = ['Access-Control-Allow-Methods', 'Vary']
+default['repose']['merge_header']['response_headers'] = ['Access-Control-Allow-Methods', 'access-control-expose-headers', 'Vary']
 
 default['repose']['cors']['cluster_id'] = ['all']
 default['repose']['cors']['allowed_methods'] = %w(
