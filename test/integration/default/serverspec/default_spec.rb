@@ -13,14 +13,6 @@ describe file('/etc/repose/slf4j-http-logging.cfg.xml') do
   it { should be_file }
   it { should be_mode 644 }
 end
-describe file('/etc/repose/merge-header.cfg.xml') do
-  it { should be_file }
-  it { should be_mode 644 }
-end
-describe file('/etc/repose/cors.cfg.xml') do
-  it { should be_file }
-  it { should be_mode 644 }
-end
 describe file('/etc/repose/container.cfg.xml') do
   it { should be_file }
   it { should be_mode 644 }

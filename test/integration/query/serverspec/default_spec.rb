@@ -22,7 +22,11 @@ describe file('/etc/repose/merge-header.cfg.xml') do
   it { should be_mode 644 }
   its(:content) do
     should match %r{    <response>
+        <header>Access-Control-Allow-Credentials</header>
+        <header>Access-Control-Allow-Origin</header>
+        <header>Access-Control-Allow-Headers</header>
         <header>Access-Control-Allow-Methods</header>
+        <header>Access-Control-Expose-Headers</header>
         <header>Vary</header>
     </response>}
   end
@@ -34,7 +38,6 @@ describe file('/etc/repose/cors.cfg.xml') do
   its(:content) do
     should match %r{    <allowed-methods>
         <method>GET</method>
-        <method>POST</method>
     </allowed-methods>}
   end
 end

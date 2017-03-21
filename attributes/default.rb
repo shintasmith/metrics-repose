@@ -16,8 +16,6 @@ default['repose']['slf4j_http_logging']['format'] = '<![CDATA[
 
 default['repose']['filters'] = %w(
   slf4j-http-logging
-  merge-header
-  cors
   header-normalization
   add-header
   keystone-v2
@@ -37,7 +35,14 @@ default['repose']['http_connection_pool']['max_total'] = 400
 default['repose']['http_connection_pool']['max_per_route'] = 400
 
 default['repose']['merge_header']['cluster_id'] = ['all']
-default['repose']['merge_header']['response_headers'] = ['Access-Control-Allow-Methods', 'access-control-expose-headers', 'Vary']
+default['repose']['merge_header']['response_headers'] = %w(
+  Access-Control-Allow-Credentials
+  Access-Control-Allow-Origin
+  Access-Control-Allow-Headers
+  Access-Control-Allow-Methods
+  Access-Control-Expose-Headers
+  Vary
+)
 
 default['repose']['cors']['cluster_id'] = ['all']
 default['repose']['cors']['allowed_methods'] = %w(

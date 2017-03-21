@@ -47,7 +47,41 @@ node.default['repose']['endpoints'] = [{
   'default' => true
 }]
 
+node.default['repose']['filters'] = %w(
+  slf4j-http-logging
+  merge-header
+  cors
+  header-normalization
+  add-header
+  keystone-v2
+  ip-identity
+  rate-limiting
+  api-validator
+)
+
 node.default['repose']['slf4j_http_logging']['id'] = 'query-repose-http-log'
+
+node.default['repose']['merge_header']['cluster_id'] = ['all']
+node.default['repose']['merge_header']['response_headers'] = %w(
+  Access-Control-Allow-Credentials
+  Access-Control-Allow-Origin
+  Access-Control-Allow-Headers
+  Access-Control-Allow-Methods
+  Access-Control-Expose-Headers
+  Vary
+)
+
+node.default['repose']['cors']['cluster_id'] = ['all']
+node.default['repose']['cors']['allowed_methods'] = %w(
+  GET
+)
+node.default['repose']['cors']['resources'] = [
+  { 'path'            => '/v2.0/.*/views.*',
+    'allowed_methods' => %w(
+      POST
+    ) }
+]
+
 node.default['repose']['keystone_v2']['groups_in_header'] = true
 node.default['repose']['keystone_v2']['uri'] = 'https://identity.api.rackspacecloud.com'
 node.default['repose']['keystone_v2']['cache'] = {

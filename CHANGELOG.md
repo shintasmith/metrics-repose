@@ -1,3 +1,6 @@
+# 0.1.22
+- add more CORS resp header to merge-header configuration, only install cors and merge-header on query nodes
+
 # 0.1.21
 - add merge-header and cors filters
 
