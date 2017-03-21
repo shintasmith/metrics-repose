@@ -34,22 +34,6 @@ default['repose']['http_connection_pool']['connection_timeout'] = 30_000 # in mi
 default['repose']['http_connection_pool']['max_total'] = 400
 default['repose']['http_connection_pool']['max_per_route'] = 400
 
-default['repose']['merge_header']['cluster_id'] = ['all']
-default['repose']['merge_header']['response_headers'] = %w(
-  Access-Control-Allow-Credentials
-  Access-Control-Allow-Origin
-  Access-Control-Allow-Headers
-  Access-Control-Allow-Methods
-  Access-Control-Expose-Headers
-  Vary
-)
-
-default['repose']['cors']['cluster_id'] = ['all']
-default['repose']['cors']['allowed_methods'] = %w(
-  GET
-  POST
-)
-
 default['repose']['header_normalization']['cluster_id'] = ['all']
 default['repose']['header_normalization']['uri_regex'] = nil
 default['repose']['header_normalization']['whitelist'] = []
